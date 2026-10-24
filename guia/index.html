@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía OFFLIT</title>
+<meta name="description" content="Cómo activar OFFLIT en TradingView y cómo leer cada zona: techo, suelo, imán, liquidez, fuerza y sesgo del día.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0c0e13; --bg2:#10131a; --panel:#151922; --panel2:#1a1f2a; --line:#262c39; --line2:#323a4b;
+  --fg:#ebe7df; --fg2:#c9c4b8; --muted:#8e8c88; --dim:#5f5f66;
+  --brass:#c8aa6e; --brass2:#e2c88f;
+  --techo:#c96a66; --suelo:#5e9f84; --iman:#8f88cf; --liq:#cfa052; --flip:#6aa6d8;
+  --display:"Spectral","Iowan Old Style",Georgia,serif;
+  --body:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark }
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light } }
+:root[data-theme="light"]{
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:clamp(2.3rem,5.5vw,4rem)}
+h2{font-size:clamp(1.7rem,3.2vw,2.5rem)}
+h3{font-size:1.3rem;line-height:1.3}
+h1 i,h2 i{font-style:italic;font-weight:300;color:var(--brass2)}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.prose{max-width:66ch}
+.prose p+p,.prose ol,.prose ul{margin-top:14px}
+section{padding-block:clamp(48px,8vw,96px)}
+.rule{border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+.stack{display:grid;gap:24px}
+.lead{font-size:1.2rem;color:var(--fg2)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:600;padding:14px 22px;border-radius:3px;font-size:.95rem;border:0}
+.btn:hover{background:var(--brass2)}
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark{width:26px;height:26px;position:relative}
+.mark::before,.mark::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--brass)}
+.mark::before{top:7px}.mark::after{top:17px;opacity:.45}
+.brand span{font-family:var(--mono);font-weight:500;letter-spacing:.32em;font-size:.95rem;color:var(--fg)}
+.navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--muted);flex-wrap:wrap}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{color:var(--fg)}
+@media (max-width:760px){.navlinks{display:none}}
+
+/* contenido */
+.grid2{display:grid;gap:40px;grid-template-columns:1fr 1fr;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);color:var(--brass);font-size:.85rem;padding-top:4px}
+.steps b{display:block;font-weight:600;margin-bottom:4px}
+.term{border-bottom:1px dashed var(--brass);text-decoration:none;cursor:help}
+.note{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--brass);padding:18px 22px;border-radius:2px;color:var(--fg2);font-size:.98rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:26px}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(2,1fr)}
+@media (max-width:760px){.cards{grid-template-columns:1fr}}
+.swatch{display:inline-block;width:38px;height:12px;border-radius:2px;margin-right:12px;vertical-align:middle}
+.card h3{display:flex;align-items:center;margin-bottom:12px}
+.card p+p{margin-top:10px}
+.card .q{color:var(--muted);font-size:.95rem}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;font-size:.98rem}
+.kv dt{font-family:var(--mono);color:var(--brass);font-size:.82rem;padding-top:3px;white-space:nowrap}
+.kv dd{margin:0;color:var(--fg2)}
+.symbols{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.symbols span{font-family:var(--mono);font-size:.82rem;border:1px solid var(--line2);padding:6px 10px;border-radius:2px;color:var(--fg2)}
+.symbols span small{color:var(--muted)}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:"+";font-family:var(--mono);color:var(--brass)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--fg2);max-width:66ch}
+figure{margin:0}
+figcaption{font-size:.88rem;color:var(--muted);margin-top:10px}
+.chart{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:3px;background:var(--bg2)}
+footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);font-size:.86rem}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="brand" href="/" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <nav class="navlinks"><a href="#activar">Activar</a><a href="#pantalla">Qué ves</a><a href="#zonas">Las zonas</a><a href="#modos">Intradía y Swing</a><a href="#leer">Cómo leerlo</a><a href="#faq">Dudas</a></nav>
+  <a class="btn" href="mailto:hola@offlit.io">Soporte</a>
+</div></header>
+
+<main>
+
+<section class="wrap">
+  <div class="eyebrow">Guía de uso</div>
+  <h1>Cómo <i>leer</i> OFFLIT.</h1>
+  <p class="lead prose" style="margin-top:22px">Diez minutos de lectura. Primero cómo activarlo, después qué significa cada cosa que aparece en el gráfico y, al final, cómo usarlo en una sesión real.</p>
+</section>
+
+<section class="wrap rule" id="activar">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">01 · Activar</div>
+      <h2>En TradingView, <i>dos minutos</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">El acceso se activa solo tras el pago, en menos de una hora, en la cuenta de TradingView que escribiste al comprar. Te avisamos por correo cuando esté listo.</p>
+    </div>
+    <ol class="steps">
+      <li><div><b>Abre un gráfico y pulsa "Indicadores"</b>Está en la barra superior del gráfico.</div></li>
+      <li><div><b>Entra en "Scripts solo por invitación"</b>Es una pestaña del menú de la izquierda. Ahí aparecen <span class="mono">OFFLIT · Intradía</span> y <span class="mono">OFFLIT · Swing</span>. Añade los dos.</div></li>
+      <li><div><b>Abre uno de los ocho activos</b>Vale cualquier bróker de TradingView: OFFLIT reconoce el símbolo por su nombre y ajusta las zonas al precio exacto de tu gráfico. Nosotros usamos Axi; con OANDA, FX, Pepperstone u otro verás las mismas zonas.
+        <div class="symbols"><span>US500 <small>· SPX500</small></span><span>USTECH <small>· NAS100</small></span><span>US30</span><span>GER40 <small>· DAX40</small></span><span>XAUUSD <small>· GOLD</small></span><span>XAGUSD <small>· SILVER</small></span><span>USOIL <small>· WTI</small></span><span>UKOIL <small>· BRENT</small></span></div></div></li>
+      <li><div><b>Elige la temporalidad</b>Intradía se ve de 1 minuto a 1 hora. Swing, de 4 horas a diario. Si el panel dice "cambia de temporalidad", es solo eso.</div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="wrap rule" id="pantalla">
+  <div class="eyebrow">02 · Qué ves en pantalla</div>
+  <div class="grid2">
+    <div class="prose stack" style="gap:16px">
+      <h2>Bandas, etiquetas y un <i>panel</i>.</h2>
+      <p>Cada zona es una banda horizontal de color que sale desde la derecha del gráfico. No es una línea fina a propósito: el mercado reacciona en un rango, no en un precio exacto.</p>
+      <p>A la derecha de cada banda hay una etiqueta con tres datos: <b>qué es</b> (techo, suelo, imán o liquidez), <b>el precio central</b> y la <b>fuerza</b> de 1 a 5. Debajo, una frase que explica de dónde sale esa zona.</p>
+      <p>Arriba a la derecha está el panel: el activo, el <b>sesgo del día</b> y la fecha de las zonas. Si la fecha no es la de la última sesión cerrada, recarga el gráfico.</p>
+    </div>
+    <figure>
+      <svg class="chart" viewBox="0 0 560 320" role="img" aria-label="Esquema del gráfico con las bandas de OFFLIT">
+        <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="currentColor" stroke-opacity=".06"/></pattern></defs>
+        <rect width="560" height="320" fill="url(#g)" style="color:var(--fg)"/>
+        <rect x="300" y="54" width="250" height="22" fill="var(--techo)" fill-opacity=".28" stroke="var(--techo)" stroke-opacity=".6"/>
+        <text x="308" y="69" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">TECHO · fuerza 4</text>
+        <rect x="300" y="138" width="250" height="20" fill="var(--iman)" fill-opacity=".28" stroke="var(--iman)" stroke-opacity=".6"/>
+        <text x="308" y="152" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">IMÁN · fuerza 5</text>
+        <rect x="300" y="196" width="250" height="16" fill="var(--liq)" fill-opacity=".28" stroke="var(--liq)" stroke-opacity=".6"/>
+        <text x="308" y="208" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">LIQUIDEZ · fuerza 2</text>
+        <rect x="300" y="248" width="250" height="22" fill="var(--suelo)" fill-opacity=".28" stroke="var(--suelo)" stroke-opacity=".6"/>
+        <text x="308" y="263" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">SUELO · fuerza 4</text>
+        <g stroke="var(--fg2)" stroke-width="1.5" fill="none">
+          <path d="M40 230v-60M34 190h12v26H34z"/><path d="M70 210v-70M64 160h12v30H64z"/><path d="M100 190v-80M94 130h12v40H94z"/>
+          <path d="M130 170v-60M124 120h12v34h-12z"/><path d="M160 150v-50M154 112h12v28h-12z"/><path d="M190 165v-70M184 105h12v40h-12z"/>
+          <path d="M220 185v-60M214 135h12v38h-12z"/><path d="M250 160v-50M244 120h12v30h-12z"/><path d="M280 150v-30M274 128h12v16h-12z"/>
+        </g>
+        <rect x="430" y="10" width="120" height="36" fill="var(--panel)" stroke="var(--line2)"/>
+        <text x="438" y="24" font-family="JetBrains Mono,monospace" font-size="9" fill="var(--fg)">OFFLIT · US500</text>
+        <text x="438" y="38" font-family="JetBrains Mono,monospace" font-size="9" fill="var(--suelo)">Sesgo: comprador</text>
+      </svg>
+      <figcaption>Esquema. Las bandas se extienden hacia atrás las velas que elijas en Ajustes para que veas cómo reaccionó el precio antes.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap rule" id="zonas">
+  <div class="eyebrow">03 · Las cuatro zonas</div>
+  <h2 style="margin-bottom:28px">Qué significa <i>cada color</i>.</h2>
+  <div class="cards">
+    <div class="card">
+      <h3><span class="swatch" style="background:var(--techo)"></span>Techo</h3>
+      <p>Un nivel por encima del precio donde hay mucho posicionamiento que frena las subidas. En Intradía sale de bloques grandes que se negociaron fuera de la pantalla; en Swing, del punto donde más gente tiene <a class="term" title="Call: contrato que apuesta por subidas. Quien vendió esas calls cubre su riesgo vendiendo el activo cuando el precio se acerca, y eso frena.">calls</a> abiertas.</p>
+      <p class="q">Lectura: el precio tiende a frenar, dudar o girar ahí. Si lo atraviesa con fuerza y se mantiene encima, deja de ser techo.</p>
+    </div>
+    <div class="card">
+      <h3><span class="swatch" style="background:var(--suelo)"></span>Suelo</h3>
+      <p>Lo contrario: un nivel por debajo donde el posicionamiento sostiene el precio. En Swing suele coincidir con donde más <a class="term" title="Put: contrato que apuesta por caídas o protege una cartera. Donde se concentran, los grandes defienden el nivel.">puts</a> hay abiertas, que es donde los grandes se han protegido.</p>
+      <p class="q">Lectura: zona natural de rebote o de parar caídas. Perderla con decisión suele acelerar el movimiento.</p>
+    </div>
+    <div class="card">
+      <h3><span class="swatch" style="background:var(--iman)"></span>Imán</h3>
+      <p>El nivel con más volumen oculto <b>cerca del precio actual</b>. Es la referencia del día: el precio tiende a volver a él, a usarlo de pivote y a decidir dirección desde ahí.</p>
+      <p class="q">Lectura: por encima del imán el sesgo es alcista, por debajo bajista. Los retornos al imán son el movimiento más repetido de la sesión.</p>
+    </div>
+    <div class="card">
+      <h3><span class="swatch" style="background:var(--liq)"></span>Liquidez</h3>
+      <p>Niveles donde se acumularon bloques medianos sin ser los mayores. Son escalones: el precio se apoya o se frena ahí un momento antes de seguir.</p>
+      <p class="q">Lectura: útiles para objetivos parciales y para saber dónde puede hacer la pausa antes de llegar al techo o al suelo.</p>
+    </div>
+  </div>
+  <p class="note" style="margin-top:22px">En Swing puede aparecer una quinta banda azul, <b>Flip</b>: el precio a partir del cual los que cubren opciones cambian de amortiguar el movimiento a acelerarlo. Encima de él el mercado suele estar tranquilo; debajo, más brusco.</p>
+</section>
+
+<section class="wrap rule" id="modos">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">04 · Dos indicadores</div>
+      <h2>Intradía y <i>Swing</i> miran cosas distintas.</h2>
+    </div>
+    <div class="stack" style="gap:28px">
+      <div>
+        <h3>OFFLIT · Intradía <span class="muted mono" style="font-size:.8rem">1 min – 1 h</span></h3>
+        <p class="prose" style="margin-top:8px">Sale de las <a class="term" title="Dark pool: mercados privados donde los fondos negocian bloques grandes sin que aparezcan en el gráfico hasta después.">operaciones en dark pool</a> de la última sesión: dónde se negociaron los bloques grandes que no se ven en el gráfico. Esos precios son los que el mercado defiende o recuerda al día siguiente. Caduca rápido: sirve para la sesión de hoy.</p>
+      </div>
+      <div>
+        <h3>OFFLIT · Swing <span class="muted mono" style="font-size:.8rem">4 h – diario</span></h3>
+        <p class="prose" style="margin-top:8px">Sale del <a class="term" title="Open interest: número de contratos de opciones que siguen abiertos en cada precio. Cuanto más alto, más dinero comprometido en ese nivel.">open interest</a> de opciones: en qué precios hay más contratos abiertos de calls (techos) y de puts (suelos). Son los muros que condicionan la semana y el mes, y se mueven despacio.</p>
+      </div>
+      <dl class="kv" style="margin-top:6px">
+        <dt>Fuerza 1-5</dt><dd>Cuánto volumen o cuántos contratos hay detrás, comparado con el resto de niveles de ese activo. 5 es el mayor del día. Con el ajuste "Fuerza mínima" puedes ocultar las débiles y quedarte con las 2-3 que importan.</dd>
+        <dt>Sesgo del día</dt><dd>Comprador, vendedor o neutro. Compara cuánto dinero entró en calls frente a puts en la última sesión. No es una señal de entrada: dice hacia qué lado se inclinó el dinero institucional.</dd>
+        <dt>Actualización</dt><dd>Cada noche tras el cierre de Wall Street, de forma automática. No tienes que hacer nada; si tienes el gráfico abierto desde ayer, recárgalo.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="wrap rule" id="leer">
+  <div class="eyebrow">05 · Cómo leerlo en una sesión</div>
+  <div class="grid2">
+    <div>
+      <h2>Una <i>rutina</i> sencilla.</h2>
+      <p class="prose muted" style="margin-top:16px">OFFLIT no da entradas. Te dice dónde están los precios que importan para que tu propio método opere con contexto. Esta es la forma en que lo usamos nosotros.</p>
+    </div>
+    <ol class="steps">
+      <li><div><b>Antes de abrir, mira el mapa</b>Abre el activo en 15 minutos con Intradía. Localiza el imán, el techo y el suelo más cercanos y el sesgo del día. Con eso ya sabes el rango probable de la sesión.</div></li>
+      <li><div><b>Sitúa el precio respecto al imán</b>Si abre por encima del imán con sesgo comprador, los retrocesos al imán son zonas donde buscar continuación. Si abre por debajo con sesgo vendedor, al revés.</div></li>
+      <li><div><b>En techo y suelo, no persigas</b>Cuando el precio llega a un techo de fuerza 4-5, lo normal es que frene. No es momento de comprar la rotura: es momento de esperar a ver si la rechaza o si consolida encima.</div></li>
+      <li><div><b>Usa la liquidez para objetivos</b>Las bandas de liquidez entre tu entrada y el techo o suelo son sitios lógicos para recoger parciales.</div></li>
+      <li><div><b>Comprueba el marco grande en Swing</b>Cambia a 4 horas. Si un techo intradía coincide con un muro de calls del Swing, ese nivel pesa el doble. Si el precio está debajo del Flip, espera más brusquedad y reduce tamaño.</div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="wrap rule" id="faq">
+  <div class="eyebrow">06 · Dudas frecuentes</div>
+  <div class="prose" style="max-width:760px">
+    <details><summary>El panel dice "activo no soportado"</summary><p>El símbolo de tu gráfico no es uno de los ocho. Comprueba que el nombre contenga US500/SPX500, USTECH/NAS100, US30, GER40/DAX, XAUUSD/GOLD, XAGUSD/SILVER, USOIL/WTI o UKOIL/BRENT. Los futuros ES, NQ, YM, GC, SI y CL también funcionan.</p></details>
+    <details><summary>El panel dice "cambia de temporalidad"</summary><p>Intradía solo pinta de 1 minuto a 1 hora; Swing de 4 horas a diario. Es intencionado: cada uno enseña lo que tiene sentido en su marco.</p></details>
+    <details><summary>No me aparece en "Scripts solo por invitación"</summary><p>El acceso se activa en menos de una hora tras el pago en el usuario de TradingView que escribiste al comprar. Si pasó más de una hora, revisa el correo: si el usuario estaba mal escrito te habremos avisado. Escríbenos a <a href="mailto:hola@offlit.io">hola@offlit.io</a> con tu usuario exacto y lo resolvemos.</p></details>
+    <details><summary>¿Las zonas son las mismas en todos los brókers?</summary><p>Sí. Se calculan sobre el mercado real y se convierten al precio de tu gráfico en el momento de cargarlo, así que a cada bróker le salen en su precio pero en el mismo sitio.</p></details>
+    <details><summary>¿Por qué un día hay más zonas que otro?</summary><p>Porque el volumen oculto y el open interest no se reparten igual cada día. Si solo hay dos o tres zonas, es que ese día el posicionamiento está concentrado; suele ser una buena noticia para leerlo.</p></details>
+    <details><summary>¿Cómo cancelo?</summary><p>Desde el enlace de tu factura de Stripe, en cualquier momento. Mantienes el acceso hasta el final del periodo pagado y se desactiva solo después.</p></details>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap stack" style="gap:12px">
+  <a class="brand" href="/" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <p>Un producto de DCM FX, LLC · Contenido educativo. No constituye asesoramiento financiero ni recomendación de inversión. Operar con CFDs, futuros y opciones conlleva un alto riesgo de pérdida.</p>
+  <p>Soporte: <a href="mailto:hola@offlit.io">hola@offlit.io</a> · TradingView es una marca de TradingView, Inc.</p>
+</div></footer>
+
+</body>
+</html>
