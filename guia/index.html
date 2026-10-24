@@ -11,7 +11,7 @@
   --bg:#0c0e13; --bg2:#10131a; --panel:#151922; --panel2:#1a1f2a; --line:#262c39; --line2:#323a4b;
   --fg:#ebe7df; --fg2:#c9c4b8; --muted:#8e8c88; --dim:#5f5f66;
   --brass:#c8aa6e; --brass2:#e2c88f;
-  --techo:#c96a66; --suelo:#5e9f84; --iman:#8f88cf; --liq:#cfa052; --flip:#6aa6d8;
+  --techo:#c96a66; --suelo:#5e9f84; --iman:#8f88cf; --liq:#cfa052; --prot:#5f9bc9; --libre:#8a8f99;
   --display:"Spectral","Iowan Old Style",Georgia,serif;
   --body:"Figtree","Helvetica Neue",Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -117,7 +117,7 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
     <div class="prose stack" style="gap:16px">
       <p>Un gráfico enseña las operaciones que pasaron por el mercado visible. No enseña los bloques que los fondos negocian en privado, ni dónde se han protegido con opciones, ni hacia qué lado entró el dinero grande en la última sesión. Esa información existe, se publica cada día y cuesta varios cientos de dólares al mes en terminales profesionales, además de saber interpretarla.</p>
       <p>OFFLIT nace de años operando con esas terminales abiertas al lado del gráfico y de una pregunta repetida de alumnos y compañeros: "¿qué miras tú que yo no veo?". La respuesta era siempre la misma: dónde está el posicionamiento real. No los soportes que se trazan a ojo, sino los precios donde hay dinero comprometido.</p>
-      <p>Lo que cura es concreto: dejar de operar contra niveles donde el mercado tiene toda la munición, dejar de perseguir roturas que mueren en un techo que no conocías, y tener cada mañana una referencia objetiva en lugar de una línea que cada trader dibuja distinta. Sin pagar las terminales ni aprender a leer cadenas de opciones. Eso lo hace OFFLIT por ti y lo traduce a cuatro colores.</p>
+      <p>Lo que cura es concreto: dejar de operar contra niveles donde el mercado tiene toda la munición, dejar de perseguir roturas que mueren en un techo que no conocías, y tener cada mañana una referencia objetiva en lugar de una línea que cada trader dibuja distinta. Sin pagar las terminales ni aprender a leer cadenas de opciones. Eso lo hace OFFLIT por ti y lo traduce a seis colores.</p>
     </div>
   </div>
 </section>
@@ -145,21 +145,25 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
     <div class="prose stack" style="gap:16px">
       <h2>Bandas, etiquetas y un <i>panel</i>.</h2>
       <p>Cada zona es una banda horizontal de color que sale desde la derecha del gráfico. No es una línea fina a propósito: el mercado reacciona en un rango, no en un precio exacto.</p>
-      <p>A la derecha de cada banda hay una etiqueta con tres datos: <b>qué es</b> (techo, suelo, imán o liquidez), <b>el precio central</b> y la <b>fuerza</b> de 1 a 5. Debajo, una frase que explica de dónde sale esa zona.</p>
+      <p>A la derecha de cada banda hay una etiqueta con tres datos: <b>qué es</b> (techo, suelo, imán, protección, liquidez o espacio libre), <b>el precio central</b> y la <b>fuerza</b> de 1 a 5. Debajo, una frase que explica de dónde sale esa zona.</p>
       <p>Arriba a la derecha está el panel: el activo, el <b>sesgo del día</b> y la fecha de las zonas. Si la fecha no es la de la última sesión cerrada, recarga el gráfico.</p>
     </div>
     <figure>
-      <svg class="chart" viewBox="0 0 560 320" role="img" aria-label="Esquema del gráfico con las bandas de OFFLIT">
+      <svg class="chart" viewBox="0 0 560 330" role="img" aria-label="Esquema del gráfico con las bandas de OFFLIT">
         <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="currentColor" stroke-opacity=".06"/></pattern></defs>
         <rect width="560" height="320" fill="url(#g)" style="color:var(--fg)"/>
         <rect x="300" y="54" width="250" height="22" fill="var(--techo)" fill-opacity=".28" stroke="var(--techo)" stroke-opacity=".6"/>
         <text x="308" y="69" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">TECHO · fuerza 4</text>
         <rect x="300" y="138" width="250" height="20" fill="var(--iman)" fill-opacity=".28" stroke="var(--iman)" stroke-opacity=".6"/>
         <text x="308" y="152" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">IMÁN · fuerza 5</text>
+        <rect x="300" y="82" width="250" height="50" fill="var(--libre)" fill-opacity=".12" stroke="var(--libre)" stroke-opacity=".3"/>
+        <text x="308" y="110" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--muted)">ESPACIO LIBRE</text>
         <rect x="300" y="196" width="250" height="16" fill="var(--liq)" fill-opacity=".28" stroke="var(--liq)" stroke-opacity=".6"/>
         <text x="308" y="208" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">LIQUIDEZ · fuerza 2</text>
         <rect x="300" y="248" width="250" height="22" fill="var(--suelo)" fill-opacity=".28" stroke="var(--suelo)" stroke-opacity=".6"/>
         <text x="308" y="263" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">SUELO · fuerza 4</text>
+        <rect x="300" y="290" width="250" height="18" fill="var(--prot)" fill-opacity=".28" stroke="var(--prot)" stroke-opacity=".6"/>
+        <text x="308" y="303" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--fg)">PROTECCIÓN · fuerza 5</text>
         <g stroke="var(--fg2)" stroke-width="1.5" fill="none">
           <path d="M40 230v-60M34 190h12v26H34z"/><path d="M70 210v-70M64 160h12v30H64z"/><path d="M100 190v-80M94 130h12v40H94z"/>
           <path d="M130 170v-60M124 120h12v34h-12z"/><path d="M160 150v-50M154 112h12v28h-12z"/><path d="M190 165v-70M184 105h12v40h-12z"/>
@@ -175,8 +179,8 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
 </section>
 
 <section class="wrap rule" id="zonas">
-  <div class="eyebrow">03 · Las cuatro zonas</div>
-  <h2 style="margin-bottom:28px">Qué significa <i>cada color</i>.</h2>
+  <div class="eyebrow">03 · Las zonas</div>
+  <h2 style="margin-bottom:28px">Seis zonas, <i>seis colores</i>.</h2>
   <div class="cards">
     <div class="card">
       <h3><span class="swatch" style="background:var(--techo)"></span>Techo</h3>
@@ -194,12 +198,22 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
       <p class="q">Lectura: por encima del imán el sesgo es alcista, por debajo bajista. Los retornos al imán son el movimiento más repetido de la sesión.</p>
     </div>
     <div class="card">
+      <h3><span class="swatch" style="background:var(--prot)"></span>Protección</h3>
+      <p>Solo en Swing. El precio con la <b>mayor concentración de <a class="term" title="Put: contrato que apuesta por caídas o protege una cartera.">puts</a></b>: es donde las carteras institucionales han comprado sus coberturas. No es un suelo más; es el que más pesa.</p>
+      <p class="q">Lectura: mientras el precio está por encima, las caídas suelen frenarse ahí. Si se pierde con decisión, esas coberturas se activan y la caída se acelera.</p>
+    </div>
+    <div class="card">
       <h3><span class="swatch" style="background:var(--liq)"></span>Liquidez</h3>
-      <p>Tramos donde el precio <b>no tiene nada delante</b>: no hay bloques grandes ni posicionamiento de opciones que lo frene. Es terreno libre. Cuando el precio entra en una zona de liquidez tiende a recorrerla rápido hasta el siguiente techo o suelo, porque nadie la defiende.</p>
-      <p class="q">Lectura: son el camino, no el destino. Si estás dentro de una, el objetivo lógico es el techo o el suelo que la cierra; si el precio rompe un techo y debajo solo hay liquidez, espera recorrido.</p>
+      <p>Un cluster de volumen total, visible y oculto, que no es techo ni suelo. Son los precios donde muchos operadores han dejado órdenes y stops.</p>
+      <p class="q">Lectura: al tocarlos el precio se acelera o se frena de golpe. Útiles como objetivos parciales y para no poner tu stop justo donde están los de todos.</p>
+    </div>
+    <div class="card">
+      <h3><span class="swatch" style="background:var(--libre)"></span>Espacio libre</h3>
+      <p>Un tramo entre dos zonas donde el precio <b>no tiene nada delante</b>: ni bloques ni posicionamiento que lo frene. Es terreno libre y se pinta como una banda ancha y tenue.</p>
+      <p class="q">Lectura: es el camino, no el destino. Si el precio entra en él, el objetivo lógico es la zona que lo cierra por el otro lado; si rompe un techo y detrás solo hay espacio libre, espera recorrido.</p>
     </div>
   </div>
-  <p class="note" style="margin-top:22px">En Swing puede aparecer una quinta banda azul, <b>Flip</b>: el precio a partir del cual los que cubren opciones cambian de amortiguar el movimiento a acelerarlo. Encima de él el mercado suele estar tranquilo; debajo, más brusco.</p>
+
 </section>
 
 <section class="wrap rule" id="que-son">
@@ -251,8 +265,8 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
       <li><div><b>Antes de abrir, mira el mapa</b>Abre el activo en 15 minutos con Intradía. Localiza el imán, el techo y el suelo más cercanos y el sesgo del día. Con eso ya sabes el rango probable de la sesión.</div></li>
       <li><div><b>Sitúa el precio respecto al imán</b>Si abre por encima del imán con sesgo comprador, los retrocesos al imán son zonas donde buscar continuación. Si abre por debajo con sesgo vendedor, al revés.</div></li>
       <li><div><b>En techo y suelo, no persigas</b>Cuando el precio llega a un techo de fuerza 4-5, lo normal es que frene. No es momento de comprar la rotura: es momento de esperar a ver si la rechaza o si consolida encima.</div></li>
-      <li><div><b>Usa la liquidez para objetivos</b>Las bandas de liquidez entre tu entrada y el techo o suelo son sitios lógicos para recoger parciales.</div></li>
-      <li><div><b>Comprueba el marco grande en Swing</b>Cambia a 4 horas. Si un techo intradía coincide con un muro de calls del Swing, ese nivel pesa el doble. Si el precio está debajo del Flip, espera más brusquedad y reduce tamaño.</div></li>
+      <li><div><b>Usa la liquidez y el espacio libre para objetivos</b>Las bandas de liquidez entre tu entrada y el techo o suelo son sitios lógicos para recoger parciales. Si entre tu entrada y la siguiente zona solo hay espacio libre, deja correr: no hay nada que lo frene antes.</div></li>
+      <li><div><b>Comprueba el marco grande en Swing</b>Cambia a 4 horas. Si un techo intradía coincide con un muro de calls del Swing, ese nivel pesa el doble. Y localiza la Protección: mientras el precio esté por encima, las caídas tienen red; por debajo, reduce tamaño.</div></li>
     </ol>
   </div>
 </section>
