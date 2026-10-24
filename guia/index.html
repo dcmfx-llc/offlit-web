@@ -95,7 +95,7 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
 
 <header><div class="wrap nav">
   <a class="brand" href="/" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
-  <nav class="navlinks"><a href="#activar">Activar</a><a href="#pantalla">Qué ves</a><a href="#zonas">Las zonas</a><a href="#modos">Intradía y Swing</a><a href="#leer">Cómo leerlo</a><a href="#faq">Dudas</a></nav>
+  <nav class="navlinks"><a href="#porque">Por qué</a><a href="#activar">Activar</a><a href="#pantalla">Qué ves</a><a href="#zonas">Las zonas</a><a href="#modos">Intradía y Swing</a><a href="#leer">Cómo leerlo</a><a href="#responsabilidad">Responsabilidad</a><a href="#faq">Dudas</a></nav>
   <a class="btn" href="mailto:hola@offlit.io">Soporte</a>
 </div></header>
 
@@ -105,6 +105,21 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   <div class="eyebrow">Guía de uso</div>
   <h1>Cómo <i>leer</i> OFFLIT.</h1>
   <p class="lead prose" style="margin-top:22px">Diez minutos de lectura. Primero cómo activarlo, después qué significa cada cosa que aparece en el gráfico y, al final, cómo usarlo en una sesión real.</p>
+</section>
+
+<section class="wrap rule" id="porque">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">00 · Por qué existe</div>
+      <h2>Lo que el gráfico <i>no ilumina</i>.</h2>
+      <p class="muted" style="margin-top:16px;font-size:.95rem">OFF · LIT: lo que queda fuera de la luz. El nombre es literal.</p>
+    </div>
+    <div class="prose stack" style="gap:16px">
+      <p>Un gráfico enseña las operaciones que pasaron por el mercado visible. No enseña los bloques que los fondos negocian en privado, ni dónde se han protegido con opciones, ni hacia qué lado entró el dinero grande en la última sesión. Esa información existe, se publica cada día y cuesta varios cientos de dólares al mes en terminales profesionales, además de saber interpretarla.</p>
+      <p>OFFLIT nace de años operando con esas terminales abiertas al lado del gráfico y de una pregunta repetida de alumnos y compañeros: "¿qué miras tú que yo no veo?". La respuesta era siempre la misma: dónde está el posicionamiento real. No los soportes que se trazan a ojo, sino los precios donde hay dinero comprometido.</p>
+      <p>Lo que cura es concreto: dejar de operar contra niveles donde el mercado tiene toda la munición, dejar de perseguir roturas que mueren en un techo que no conocías, y tener cada mañana una referencia objetiva en lugar de una línea que cada trader dibuja distinta. Sin pagar las terminales ni aprender a leer cadenas de opciones. Eso lo hace OFFLIT por ti y lo traduce a cuatro colores.</p>
+    </div>
+  </div>
 </section>
 
 <section class="wrap rule" id="activar">
@@ -180,11 +195,25 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
     </div>
     <div class="card">
       <h3><span class="swatch" style="background:var(--liq)"></span>Liquidez</h3>
-      <p>Niveles donde se acumularon bloques medianos sin ser los mayores. Son escalones: el precio se apoya o se frena ahí un momento antes de seguir.</p>
-      <p class="q">Lectura: útiles para objetivos parciales y para saber dónde puede hacer la pausa antes de llegar al techo o al suelo.</p>
+      <p>Tramos donde el precio <b>no tiene nada delante</b>: no hay bloques grandes ni posicionamiento de opciones que lo frene. Es terreno libre. Cuando el precio entra en una zona de liquidez tiende a recorrerla rápido hasta el siguiente techo o suelo, porque nadie la defiende.</p>
+      <p class="q">Lectura: son el camino, no el destino. Si estás dentro de una, el objetivo lógico es el techo o el suelo que la cierra; si el precio rompe un techo y debajo solo hay liquidez, espera recorrido.</p>
     </div>
   </div>
   <p class="note" style="margin-top:22px">En Swing puede aparecer una quinta banda azul, <b>Flip</b>: el precio a partir del cual los que cubren opciones cambian de amortiguar el movimiento a acelerarlo. Encima de él el mercado suele estar tranquilo; debajo, más brusco.</p>
+</section>
+
+<section class="wrap rule" id="que-son">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">03b · Qué son y qué no son</div>
+      <h2>No son soportes <i>dibujados</i>.</h2>
+    </div>
+    <div class="prose stack" style="gap:16px">
+      <p>Una zona de OFFLIT no es una línea trazada sobre un máximo anterior, ni un número redondo, ni una media móvil. Es <b>posicionamiento real</b>: precios donde hay dinero comprometido, recogido de fuentes institucionales que se publican cada día y que normalmente solo se miran desde terminales profesionales.</p>
+      <p><b>De qué se compone un techo o un suelo.</b> Básicamente de dos cosas. Una, los <a class="term" title="Dark pool: mercados privados donde fondos e instituciones cruzan bloques grandes sin que aparezcan en el gráfico hasta después.">bloques negociados en dark pool</a>: cuando una institución compra o vende una cantidad enorme a un precio, ese precio se convierte en su referencia y tiende a defenderlo. Dos, el <a class="term" title="Open interest: contratos de opciones que siguen abiertos en cada precio. Cuanto más alto, más dinero hay comprometido ahí.">posicionamiento en opciones</a>: donde se concentran las <a class="term" title="Call: contrato que apuesta por subidas.">calls</a> se forma un techo, porque quienes las vendieron cubren su riesgo vendiendo el activo al acercarse el precio; donde se concentran las <a class="term" title="Put: contrato que apuesta por caídas o protege una cartera.">puts</a> se forma un suelo, porque ahí están las coberturas de los grandes. A eso se suma el flujo de dinero de la última sesión, que da el sesgo. Todo junto, filtrado por tamaño y distancia al precio, es lo que ves pintado.</p>
+      <p><b>Siempre con contexto.</b> OFFLIT te dice dónde está el posicionamiento, no qué va a hacer el mercado. Un techo de fuerza 5 puede saltar por los aires con un dato de inflación, una decisión de la Fed o una noticia geopolítica. Por eso una zona nunca se opera sola: tiene que confirmarla el contexto macro (qué datos y bancos centrales hay esa semana), el geopolítico (qué está moviendo el riesgo) y el técnico que tú uses (estructura, volumen, tu propio método). OFFLIT es la capa que te faltaba, no la que sustituye a las demás.</p>
+    </div>
+  </div>
 </section>
 
 <section class="wrap rule" id="modos">
@@ -228,8 +257,22 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   </div>
 </section>
 
+<section class="wrap rule" id="responsabilidad">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">06 · Responsabilidad</div>
+      <h2>Lo que OFFLIT <i>no es</i>.</h2>
+    </div>
+    <div class="prose stack" style="gap:16px">
+      <p>OFFLIT es una herramienta de información y formación. Muestra datos de posicionamiento del mercado procesados y traducidos a zonas; <b>no da señales, no recomienda operaciones y no constituye asesoramiento financiero ni de inversión</b>. Nada de lo que aparece en el indicador, en esta guía o en los correos debe entenderse como una invitación a comprar o vender ningún activo.</p>
+      <p>Operar con CFDs, futuros y opciones conlleva un riesgo alto de perder el capital, y puede no ser adecuado para todo el mundo. Cada decisión que tomes con OFFLIT en pantalla es tuya: tú eliges el tamaño, el riesgo y el momento, y tú respondes del resultado. Las zonas describen dónde hay posicionamiento hoy; no predicen lo que pasará mañana, y lo que ocurrió en zonas anteriores no garantiza lo que ocurrirá en las siguientes.</p>
+      <p>Los datos proceden de proveedores institucionales con licencia y se procesan automáticamente; pueden contener retrasos o errores puntuales, y en días festivos o de baja actividad puede haber menos zonas o ninguna. Si vas a usar OFFLIT, hazlo con un plan de gestión de riesgo propio y, si lo necesitas, con el consejo de un profesional regulado.</p>
+    </div>
+  </div>
+</section>
+
 <section class="wrap rule" id="faq">
-  <div class="eyebrow">06 · Dudas frecuentes</div>
+  <div class="eyebrow">07 · Dudas frecuentes</div>
   <div class="prose" style="max-width:760px">
     <details><summary>El panel dice "activo no soportado"</summary><p>El símbolo de tu gráfico no es uno de los ocho. Comprueba que el nombre contenga US500/SPX500, USTECH/NAS100, US30, GER40/DAX, XAUUSD/GOLD, XAGUSD/SILVER, USOIL/WTI o UKOIL/BRENT. Los futuros ES, NQ, YM, GC, SI y CL también funcionan.</p></details>
     <details><summary>El panel dice "cambia de temporalidad"</summary><p>Intradía solo pinta de 1 minuto a 1 hora; Swing de 4 horas a diario. Es intencionado: cada uno enseña lo que tiene sentido en su marco.</p></details>
