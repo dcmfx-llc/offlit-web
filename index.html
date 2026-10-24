@@ -1,0 +1,482 @@
+<title>OFFLIT</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Identidad: terminal de grafito y marfil; un solo acento de latón envejecido. Las bandas de color
+   del indicador (techo, suelo, imán, liquidez) son la única otra fuente de color.                    */
+:root{
+  --bg:#0c0e13; --bg2:#10131a; --panel:#151922; --panel2:#1a1f2a; --line:#262c39; --line2:#323a4b;
+  --fg:#ebe7df; --fg2:#c9c4b8; --muted:#8e8c88; --dim:#5f5f66;
+  --brass:#c8aa6e; --brass2:#e2c88f;
+  --techo:#c96a66; --suelo:#5e9f84; --iman:#8f88cf; --liq:#cfa052;
+  --display:"Spectral", "Iowan Old Style", Georgia, serif;
+  --body:"Figtree", "Helvetica Neue", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light } }
+:root[data-theme="light"]{
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.08;text-wrap:balance;letter-spacing:-.005em}
+h1{font-size:clamp(2.6rem,6.4vw,5rem)}
+h2{font-size:clamp(1.9rem,3.8vw,3rem)}
+h3{font-size:1.35rem;line-height:1.3}
+h1 i,h2 i{font-style:italic;font-weight:300;color:var(--brass2)}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.prose{max-width:64ch}
+section{padding-block:clamp(64px,10vw,128px)}
+.rule{border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+.stack{display:grid;gap:24px}
+.lead{font-size:1.22rem;color:var(--fg2);font-weight:400}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:600;padding:16px 26px;border-radius:3px;font-size:1rem;border:0;cursor:pointer;letter-spacing:.01em}
+.btn:hover{background:var(--brass2)}
+.btn.line{background:transparent;color:var(--fg);border:1px solid var(--line2)}
+.btn.line:hover{background:var(--panel2)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark{width:26px;height:26px;position:relative}
+.mark::before,.mark::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--brass)}
+.mark::before{top:7px}.mark::after{top:17px;opacity:.45}
+.brand span{font-family:var(--mono);font-weight:500;letter-spacing:.32em;font-size:.95rem;color:var(--fg)}
+.nav .btn{padding:10px 18px;font-size:.9rem}
+.navlinks{display:flex;gap:26px;font-size:.92rem;color:var(--muted)}
+.navlinks a{text-decoration:none}.navlinks a:hover{color:var(--fg)}
+@media (max-width:760px){.navlinks{display:none}}
+
+
+/* hero limpio */
+.hero{padding-block:clamp(88px,13vw,180px) clamp(64px,9vw,110px)}
+.hero h1{max-width:14ch}
+/* historia con scroll */
+.story{position:relative;height:620vh;padding:0;border-top:1px solid var(--line)}
+.sticky{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);height:calc(100vh - 64px - env(safe-area-inset-top,0px));display:flex;align-items:center}
+.scene-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;width:100%}
+.scene .frame{box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.captions{position:relative;min-height:260px}
+.cap{position:absolute;inset:0;display:grid;gap:12px;align-content:center;opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+.cap.on{opacity:1;transform:none}
+.cap h3{font-size:clamp(1.6rem,2.6vw,2.3rem)}
+.cap p:last-child{color:var(--muted)}
+.hidden{visibility:hidden}
+@media (max-width:900px){
+  .story{height:auto}
+  .sticky{position:static;height:auto;display:block;padding-block:56px}
+  .scene-grid{grid-template-columns:1fr}
+  .captions{min-height:0;display:grid;gap:28px}
+  .cap{position:static;opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .story{height:auto}.sticky{position:static;height:auto;padding-block:56px}
+  .captions{min-height:0;display:grid;gap:28px}.cap{position:static;opacity:1;transform:none}
+}
+
+/* hero (antiguo) */
+.hero{position:relative;padding-block:clamp(72px,11vw,150px) clamp(56px,8vw,96px);overflow:hidden}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.55;pointer-events:none}
+.hero .wrap{position:relative}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:end}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.kicker{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ctas{display:flex;gap:14px;flex-wrap:wrap}
+.fine{font-size:.88rem;color:var(--dim)}
+.hero-side{display:grid;gap:14px}
+.ticker{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.ticker div{background:var(--panel);padding:12px 10px;font-family:var(--mono);font-size:.74rem;color:var(--muted);display:grid;gap:4px}
+.ticker div b{color:var(--fg);font-weight:500;font-size:.9rem}
+.ticker div .up{color:var(--suelo)}.ticker div .dn{color:var(--techo)}
+
+/* chart frame */
+.frame{background:var(--panel);border:1px solid var(--line);overflow:hidden}
+.frame .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.74rem;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.frame .top b{color:var(--fg);font-weight:500}
+.frame canvas{display:block;width:100%;height:auto}
+.chip{display:inline-block;padding:2px 8px;border-radius:2px;font-size:.7rem;font-family:var(--mono);background:var(--suelo);color:#0c0e13}
+
+/* layers */
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media (max-width:900px){.layers{grid-template-columns:1fr}}
+.layer-list{display:grid;gap:0;border-top:1px solid var(--line)}
+.layer{display:grid;grid-template-columns:72px 1fr;gap:18px;padding:26px 0;border-bottom:1px solid var(--line)}
+.layer .n{font-family:var(--display);font-size:2.2rem;line-height:1;color:var(--dim);font-weight:300}
+.layer.hot .n{color:var(--brass)}
+.layer h3 span{display:block;font-family:var(--body);font-size:.95rem;color:var(--muted);margin-top:4px}
+.layer p{color:var(--fg2);margin-top:10px;font-size:1rem}
+.layer.hot p{color:var(--fg)}
+.diagram svg{width:100%;height:auto;display:block}
+
+/* cost ledger */
+.ledger{display:grid;gap:0;border-top:1px solid var(--line);max-width:760px}
+.row{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line)}
+.row .t{font-weight:500;color:var(--fg)}
+.row .t small{display:block;color:var(--muted);font-weight:400;font-size:.93rem;margin-top:3px}
+.row .c{font-family:var(--mono);font-size:.85rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.row.sum{border-bottom:0;padding-top:22px}
+.row.sum .t,.row.sum .c{color:var(--brass);font-family:var(--mono);font-weight:500}
+
+/* zones */
+.zones{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media (max-width:980px){.zones{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.zones{grid-template-columns:1fr}}
+.zone{background:var(--panel);padding:26px 22px;display:grid;gap:12px;align-content:start;position:relative}
+.zone::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c)}
+.zone .name{font-family:var(--mono);font-size:.78rem;letter-spacing:.2em;color:var(--c)}
+.zone h3{font-size:1.2rem}
+.zone p{font-size:.95rem;color:var(--muted)}
+.zone p b{color:var(--fg2);font-weight:600}
+
+/* modules */
+.mods{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media (max-width:980px){.mods{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.mods{grid-template-columns:1fr}}
+.mod{display:grid;gap:10px;padding-top:18px;border-top:1px solid var(--line2)}
+.mod .k{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.mod p{color:var(--muted);font-size:.97rem}
+
+/* inputs */
+.inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media (max-width:980px){.inputs{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.inputs{grid-template-columns:1fr}}
+.inp{background:var(--panel);padding:26px 22px;display:grid;gap:10px;align-content:start}
+.inp .k{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.inp p{color:var(--muted);font-size:.96rem}
+.inp p b{color:var(--fg2);font-weight:600}
+.sealed{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--line2);background:var(--panel2);max-width:760px;color:var(--fg2);font-size:.97rem}
+.sealed svg{width:28px;height:28px}
+
+/* statement */
+.statement{font-family:var(--display);font-weight:300;font-size:clamp(1.6rem,3.2vw,2.5rem);line-height:1.3;max-width:34ch}
+.statement i{color:var(--brass2)}
+
+/* for whom */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.list li{padding-left:28px;position:relative;color:var(--fg2)}
+.list li::before{content:"";position:absolute;left:0;top:.62em;width:14px;height:1px;background:var(--suelo)}
+.list.no li::before{background:var(--techo)}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);max-width:800px}
+@media (max-width:640px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--panel);padding:30px 28px;display:grid;gap:18px;align-content:start}
+.plan.best{background:var(--panel2)}
+.plan .tag{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.price{font-family:var(--display);font-size:3rem;line-height:1;font-weight:300}
+.price small{font-family:var(--body);font-size:1rem;color:var(--muted)}
+.plan ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;color:var(--muted);font-size:.95rem}
+.plan ul li{padding-left:18px;position:relative}
+.plan ul li::before{content:"";position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--dim)}
+
+/* faq */
+details{border-top:1px solid var(--line);padding:18px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-family:var(--display);font-size:1.25rem;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--brass);font-family:var(--mono)}
+details[open] summary::after{content:"−"}
+details p{margin-top:10px;color:var(--muted);max-width:64ch}
+
+footer{padding-block:48px;border-top:1px solid var(--line);color:var(--dim);font-size:.86rem}
+footer .brand span{color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.btn{transition:background .18s}}
+</style>
+
+<header><div class="wrap nav">
+  <a class="brand" href="#top" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <nav class="navlinks"><a href="#capas">El problema</a><a href="#zonas">Las zonas</a><a href="#dentro">Qué tiene en cuenta</a><a href="#acceso">Acceso</a></nav>
+  <a class="btn" href="#acceso">Acceder</a>
+</div></header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap stack" style="gap:30px">
+    <p class="kicker">Indicador para TradingView · Índices, metales y energía</p>
+    <h1>Las zonas que el mercado <i>no enseña.</i></h1>
+    <p class="lead prose">Cada mañana, antes de que abra Nueva York, OFFLIT dibuja en tu gráfico los precios donde bancos, fondos y creadores de mercado ya se han posicionado: volumen oculto, muros de opciones y coberturas. Traducidos al precio de tu bróker. Sin que tengas que entender una sola opción.</p>
+    <div class="ctas">
+      <a class="btn" href="#acceso">Ver las zonas en mi gráfico</a>
+      <a class="btn line" href="#historia">Cómo funciona</a>
+    </div>
+    <p class="fine">Se actualiza solo cada noche tras el cierre americano · US500 · USTECH · US30 · GER40 · XAUUSD · XAGUSD · USOIL · UKOIL</p>
+  </div>
+</section>
+
+<section class="story" id="historia" aria-label="Cómo se construye el gráfico capa a capa">
+  <div class="sticky">
+    <div class="wrap scene-grid">
+      <div class="scene"><div class="frame"><div class="top"><span><b id="sc-sym">XAUUSD</b> · 15 min · <span id="sc-mode">tu bróker</span></span><span id="sc-bias" class="hidden">Sesgo del día <span class="chip">comprador</span></span></div><canvas id="scene" width="1200" height="720"></canvas></div></div>
+      <div class="captions">
+        <div class="cap" data-i="0"><p class="kicker">Capa 3 · CFD</p><h3>Esto es lo que ves tú.</h3><p>El gráfico de tu bróker. Velas, un volumen que es solo el de tu bróker, y ninguna pista de quién está detrás de cada movimiento.</p></div>
+        <div class="cap" data-i="1"><p class="kicker">Capa 2 · Futuros</p><h3>Debajo, el mercado real.</h3><p>Los futuros de Chicago y Nueva York: volumen de verdad, centralizado. Es lo que arrastra tu CFD. Pero también llega después.</p></div>
+        <div class="cap" data-i="2"><p class="kicker">Capa 1 · Opciones y volumen oculto</p><h3>Arriba, donde se decide.</h3><p>Bloques que se cruzan fuera de la pantalla y precios donde se acumulan puts y calls. Las coberturas de los grandes obligan a comprar y vender justo ahí, con días de antelación.</p></div>
+        <div class="cap" data-i="3"><p class="kicker">OFFLIT</p><h3>El imán.</h3><p>El mayor bloque oculto del día, pegado al precio. El nivel al que el precio vuelve una y otra vez.</p></div>
+        <div class="cap" data-i="4"><p class="kicker">OFFLIT</p><h3>Techo y suelo.</h3><p>Por encima, el bloque o el muro de calls donde la subida frena. Por debajo, donde los grandes han comprado protección.</p></div>
+        <div class="cap" data-i="5"><p class="kicker">OFFLIT</p><h3>Liquidez y sesgo.</h3><p>El cluster donde suelen estar los stops, y en la esquina si el dinero del día ha entrado comprando o vendiendo. Todo en el precio de tu bróker, cada mañana.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rule" id="capas"><div class="wrap stack">
+  <div class="eyebrow">El problema</div>
+  <div class="layers">
+    <div class="stack">
+      <h2>Llevas años mirando soportes y resistencias en un mercado que <i>no es el mercado.</i></h2>
+      <p class="lead prose">Hay tres capas. Tú operas en la de abajo. Las decisiones se toman en la de arriba, con días de antelación.</p>
+      <div class="layer-list">
+        <div class="layer"><div class="n">03</div><div><h3>CFDs<span>US500, USTECH, XAUUSD en tu bróker</span></h3><p>El volumen que ves es el de tu bróker, no el del mercado. El precio es un reflejo de lo que pasa arriba. Aquí no se decide nada: se replica.</p></div></div>
+        <div class="layer"><div class="n">02</div><div><h3>Futuros<span>ES, NQ, GC en Chicago y Nueva York</span></h3><p>Mercado centralizado y volumen real. Es lo que mueve tu CFD. Pero incluso aquí llegas tarde: el futuro reacciona a algo que ya estaba montado antes.</p></div></div>
+        <div class="layer hot"><div class="n">01</div><div><h3>Opciones y volumen oculto<span>El mercado más grande del mundo</span></h3><p>Aquí bancos, fondos y creadores de mercado se posicionan y se cubren con días o semanas de antelación. Sus coberturas les obligan a comprar y vender futuros a precios concretos. Esos precios son los techos y suelos que después ves en tu gráfico. Y las operaciones grandes se cruzan fuera de la pantalla, para que nadie las vea.</p></div></div>
+      </div>
+      <p class="prose muted">En inglés esto se enseña desde hace años. En español se sigue explicando el trading con líneas de tendencia. No es que no te lo hayan querido contar: es que casi nadie sabe leerlo, y los que saben no lo publican.</p>
+    </div>
+    <div class="diagram" aria-hidden="true">
+      <svg viewBox="0 0 520 560" fill="none">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8aa6e" stop-opacity=".35"/><stop offset="1" stop-color="#c8aa6e" stop-opacity="0"/></linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8e8c88" stop-opacity=".22"/><stop offset="1" stop-color="#8e8c88" stop-opacity="0"/></linearGradient>
+        </defs>
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#8e8c88" letter-spacing="2">
+          <text x="24" y="40">01 · OPCIONES · VOLUMEN OCULTO</text>
+          <text x="24" y="240">02 · FUTUROS</text>
+          <text x="24" y="420">03 · CFD · TU GRÁFICO</text>
+        </g>
+        <path d="M24 60 H496 L470 200 H50 Z" fill="url(#g1)" stroke="#c8aa6e" stroke-opacity=".7"/>
+        <path d="M50 260 H470 L440 380 H80 Z" fill="url(#g2)" stroke="#5f5f66"/>
+        <path d="M80 440 H440 L420 520 H100 Z" fill="url(#g2)" stroke="#5f5f66"/>
+        <g stroke="#c8aa6e" stroke-opacity=".8" stroke-dasharray="3 5">
+          <path d="M140 200 V260"/><path d="M260 200 V260"/><path d="M380 200 V260"/>
+          <path d="M160 380 V440"/><path d="M260 380 V440"/><path d="M360 380 V440"/>
+        </g>
+        <g fill="#c8aa6e"><circle cx="140" cy="130" r="4"/><circle cx="262" cy="110" r="6"/><circle cx="380" cy="140" r="3.5"/><circle cx="200" cy="160" r="2.5"/><circle cx="330" cy="100" r="2.5"/></g>
+        <g stroke="#ebe7df" stroke-opacity=".55" stroke-width="2"><path d="M150 330 v-26 M190 318 v-30 M230 300 v-22 M270 312 v-34 M310 296 v-28 M350 320 v-26"/></g>
+        <g stroke="#ebe7df" stroke-opacity=".3" stroke-width="2"><path d="M170 500 v-18 M200 492 v-20 M230 480 v-16 M260 488 v-22 M290 478 v-18 M320 494 v-18"/></g>
+        <g font-family="Spectral, serif" font-size="13" fill="#c8aa6e" font-style="italic"><text x="300" y="232">las coberturas obligan a comprar y vender aquí</text></g>
+        <g font-family="Spectral, serif" font-size="13" fill="#8e8c88" font-style="italic"><text x="280" y="412">y esto es lo que ves tú</text></g>
+      </svg>
+    </div>
+  </div>
+</div></section>
+
+<section class="rule"><div class="wrap stack">
+  <div class="eyebrow">El coste de verlo por tu cuenta</div>
+  <h2 class="prose">Para ver esto sin OFFLIT, cada mañana tendrías que:</h2>
+  <div class="ledger">
+    <div class="row"><div class="t">Pagar una plataforma de datos institucionales de opciones y volumen oculto<small>Y aprender a navegar unas cuarenta pantallas en inglés.</small></div><div class="c">75–375 $ / mes</div></div>
+    <div class="row"><div class="t">Saber qué ETF representa a cada activo que operas<small>SPY no es US500 y GLD no es el oro. Cada precio se traduce con un ratio que cambia a diario.</small></div><div class="c">8 conversiones</div></div>
+    <div class="row"><div class="t">Leer las tablas de volumen oculto por precio de los ocho activos<small>Y distinguir qué bloques son relevantes y cuáles son ruido.</small></div><div class="c">8 tablas</div></div>
+    <div class="row"><div class="t">Leer el posicionamiento en opciones: dónde hay más puts y más calls abiertas<small>Puts: seguros contra caídas. Calls: contra subidas. Donde se acumulan, el precio reacciona.</small></div><div class="c">16 cadenas</div></div>
+    <div class="row"><div class="t">Calcular si el dinero del día ha entrado comprando o vendiendo<small>Sumando el flujo de prima de cientos de operaciones de opciones.</small></div><div class="c">~500 ticks / activo</div></div>
+    <div class="row"><div class="t">Convertirlo todo al precio de tu bróker y dibujarlo<small>Antes de que abra Europa. Todos los días. Sin equivocarte en un decimal.</small></div><div class="c">40–90 min</div></div>
+    <div class="row sum"><div class="t">Cada mañana</div><div class="c">≈ 1 hora · 150 $ / mes · un máster en opciones</div></div>
+  </div>
+  <p class="prose muted">Por eso el 95 % no lo mira. No porque no sirva. Porque es un trabajo entero.</p>
+</div></section>
+
+<section class="rule" id="zonas"><div class="wrap stack">
+  <div class="eyebrow">La solución</div>
+  <h2 class="prose">OFFLIT hace ese trabajo cada noche y te lo deja <i>dibujado.</i></h2>
+  <p class="lead prose">Un motor propio lee los datos institucionales tras el cierre de Wall Street, calcula las zonas, las traduce al precio de tu CFD y las publica en tu indicador. Cuando abres TradingView por la mañana, ya están. Con su explicación en una línea.</p>
+  <div class="zones">
+    <div class="zone" style="--c:var(--techo)"><div class="name">TECHO</div><h3>Donde no se persigue una subida</h3><p><b>Qué es:</b> un precio por encima del actual con un bloque oculto grande o un muro de calls.</p><p><b>Para ti:</b> el sitio donde el precio tiende a frenar.</p></div>
+    <div class="zone" style="--c:var(--suelo)"><div class="name">SUELO</div><h3>Donde los grandes han comprado protección</h3><p><b>Qué es:</b> un precio por debajo con un bloque oculto o una concentración de puts.</p><p><b>Para ti:</b> donde las caídas suelen encontrar compradores.</p></div>
+    <div class="zone" style="--c:var(--iman)"><div class="name">IMÁN</div><h3>Donde se decide la sesión</h3><p><b>Qué es:</b> el mayor bloque oculto del día, pegado al precio.</p><p><b>Para ti:</b> el nivel al que el precio vuelve una y otra vez.</p></div>
+    <div class="zone" style="--c:var(--liq)"><div class="name">LIQUIDEZ</div><h3>Donde suelen estar los stops</h3><p><b>Qué es:</b> un cluster de volumen total, visible y oculto, que no es techo ni suelo.</p><p><b>Para ti:</b> donde el precio se acelera o se frena de golpe.</p></div>
+  </div>
+  <div class="mods">
+    <div class="mod"><div class="k">Intradía</div><h3>Las zonas de hoy</h3><p>Volumen oculto de la sesión en curso. De 1 minuto a 1 hora. Cada día las de ese día: las de ayer ya no valen.</p></div>
+    <div class="mod"><div class="k">Swing</div><h3>Los muros del mes</h3><p>Posicionamiento en opciones a semanas y meses vista. De 4 horas a diario. Los niveles alrededor de los cuales se construye el mes.</p></div>
+    <div class="mod"><div class="k">Sesgo</div><h3>Con quién va el dinero</h3><p>Comprador, vendedor o neutro, según cómo ha entrado el dinero en opciones ese día. Para no operar contra la corriente.</p></div>
+    <div class="mod"><div class="k">Fuerza 1–5</div><h3>Solo lo que importa</h3><p>Cada zona lleva su fuerza. Filtra las flojas con un clic y quédate con los tres niveles que cuentan.</p></div>
+  </div>
+</div></section>
+
+<section class="rule" id="dentro"><div class="wrap stack">
+  <div class="eyebrow">Qué tiene en cuenta</div>
+  <h2 class="prose">Lo que entra en el cálculo, en lenguaje claro.</h2>
+  <p class="prose muted">Te decimos qué se mira. Cómo se pondera y se filtra es lo que hace que esto valga, y eso no sale de aquí.</p>
+  <div class="inputs">
+    <div class="inp"><div class="k">Volumen oculto por niveles</div><p><b>Lo que se cruza fuera de la pantalla</b>, precio a precio, en el ETF que representa a tu activo. Dónde se concentra, cuánto pesa frente al volumen visible y a qué distancia está del cierre.</p></div>
+    <div class="inp"><div class="k">Bloques institucionales</div><p><b>Operaciones de un tamaño que ningún minorista hace.</b> Un bloque grande por encima del precio no es casualidad: alguien ha vendido ahí.</p></div>
+    <div class="inp"><div class="k">Posicionamiento en opciones</div><p><b>Dónde se acumulan puts y calls abiertas</b> cerca del precio. Puts: protección contra caídas. Calls: contra subidas. Los precios con más contratos actúan como muros.</p></div>
+    <div class="inp"><div class="k">Coberturas</div><p><b>Lo que los creadores de mercado tienen que comprar o vender</b> para no perder con las opciones que han vendido. Es mecánico y obligatorio: por eso mueve el precio.</p></div>
+    <div class="inp"><div class="k">Flujo neto de prima</div><p><b>Si el dinero del día ha pagado por subida o por bajada</b>, sumando cientos de operaciones de opciones. Es el sesgo del panel.</p></div>
+    <div class="inp"><div class="k">Conversión a tu bróker</div><p><b>Ratio real entre el ETF y tu CFD</b>, calculado en vivo en tu propio gráfico. No un número fijo que se desvía a los dos días.</p></div>
+  </div>
+  <div class="sealed">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="10" width="16" height="11" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <p>El código del indicador está sellado en TradingView: nadie puede leerlo ni copiarlo. Los datos fuente no se redistribuyen; lo que recibes son las zonas ya calculadas.</p>
+  </div>
+</div></section>
+
+<section class="rule"><div class="wrap">
+  <p class="statement">El flujo sin contexto es mirar por el microscopio sin saber qué buscas. Primero hay que saber <i>dónde</i> se ha colocado el dinero grande. Después, el gráfico deja de ser ruido y empieza a ser una consecuencia.</p>
+</div></section>
+
+<section class="rule"><div class="wrap stack">
+  <div class="eyebrow">Para quién</div>
+  <div class="two">
+    <div class="stack">
+      <h2>Es para ti si</h2>
+      <ul class="list">
+        <li>Llevas más de un año con análisis técnico y sientes que no sabes dónde vas.</li>
+        <li>Operas índices, oro, plata o petróleo en CFD y quieres ver lo que mueve tu precio, no el reflejo.</li>
+        <li>Te han hablado de opciones y volumen oculto, no lo entiendes, y no quieres estudiar dos años para usarlo.</li>
+        <li>Prefieres tres niveles con razón a veinte líneas sin ella.</li>
+        <li>Quieres tu propio criterio, no señales de otro.</li>
+      </ul>
+    </div>
+    <div class="stack">
+      <h2>No es para ti si</h2>
+      <ul class="list no">
+        <li>Buscas que algo te diga cuándo comprar y cuándo vender. Esto te enseña el terreno; la decisión es tuya.</li>
+        <li>Esperas una promesa de rentabilidad. Aquí no hay ninguna, y desconfía de quien te la haga.</li>
+        <li>Operas solo acciones o cripto. Por ahora cubrimos índices, metales y energía.</li>
+        <li>No usas TradingView.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section class="rule" id="acceso"><div class="wrap stack">
+  <div class="eyebrow">Acceso</div>
+  <h2 class="prose">Una suscripción. Las zonas de cada día, en tu gráfico.</h2>
+  <div class="plans">
+    <div class="plan">
+      <div class="tag">Mensual</div>
+      <div class="price">29 $<small> / mes</small></div>
+      <ul><li>Indicador Intradía y Swing</li><li>Panel de sesgo del día</li><li>Ocho activos: índices, metales y energía</li><li>Actualización automática cada noche</li><li>Guía de lectura de las zonas</li><li>Cancela cuando quieras</li></ul>
+      <a class="btn" href="https://buy.stripe.com/aFaaEX8PZaFa9ow9We9fW03">Empezar</a>
+    </div>
+    <div class="plan best">
+      <div class="tag">Anual · ahorra 70 $</div>
+      <div class="price">274 $<small> / año</small><br><small>equivale a 22,8 $ al mes</small></div>
+      <ul><li>Todo lo del mensual</li><li>Nuevos activos según se añadan</li><li>Acceso prioritario a nuevas lecturas (cambio de régimen de gamma)</li><li>Sesión de lectura en directo al entrar</li></ul>
+      <a class="btn" href="https://buy.stripe.com/aFa00j3vFbJe0S00lE9fW04">Empezar</a>
+    </div>
+  </div>
+  <p class="fine prose">Al pagar te pedimos tu nombre de usuario de TradingView. El acceso al indicador se activa en tu cuenta en menos de una hora y se renueva mientras la suscripción esté activa. Si la cancelas, el acceso termina al final del periodo pagado.</p>
+</div></section>
+
+<section class="rule"><div class="wrap stack">
+  <div class="eyebrow">Preguntas</div>
+  <div class="prose">
+    <details><summary>¿Necesito saber de opciones para usarlo?</summary><p>No. Cada zona lleva su explicación en una línea y la guía de lectura te dice qué significa cada color y qué hacer con ella. Si quieres entender el fondo, está en la guía, pero no hace falta para operar con las zonas.</p></details>
+    <details><summary>¿Es un sistema de señales?</summary><p>No. No te dice cuándo entrar. Te enseña dónde se han posicionado los grandes para que tú decidas con eso delante. Tu plan de trading sigue siendo tuyo.</p></details>
+    <details><summary>¿Por qué los datos vienen de ETFs si yo opero CFDs?</summary><p>Porque las opciones y el volumen oculto existen en los ETFs (SPY para el S&amp;P, GLD para el oro…), no en tu CFD. El indicador convierte cada nivel al precio de tu gráfico con el ratio real del momento, calculado en tu propio TradingView.</p></details>
+    <details><summary>¿A qué hora se actualiza?</summary><p>Cada noche, entre semana, tras el cierre de Wall Street. Cuando abres el gráfico por la mañana en Europa o Latinoamérica, las zonas del día ya están.</p></details>
+    <details><summary>¿Funciona con mi bróker?</summary><p>Con cualquiera que puedas ver en TradingView: el indicador reconoce el activo por su nombre (US500, SPX500, NAS100, XAUUSD, GER40, DAX40, USOIL, UKOIL…) y ajusta el precio automáticamente.</p></details>
+    <details><summary>¿Qué pasa si cancelo?</summary><p>Mantienes el acceso hasta el final del periodo pagado. Después el indicador deja de cargarse en tu cuenta de TradingView. Sin permanencia ni letra pequeña.</p></details>
+  </div>
+</div></section>
+
+<section class="rule"><div class="wrap stack">
+  <h2 class="prose">Mañana a las nueve puedes seguir mirando el reflejo. O abrir el gráfico y ver <i>dónde está el dinero.</i></h2>
+  <div class="ctas"><a class="btn" href="#acceso">Ver las zonas en mi gráfico</a></div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap stack" style="gap:12px">
+  <a class="brand" href="#top" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <p>Un producto de DCM FX, LLC · 6300 Riverside Plaza NW, Suite 100, Albuquerque, NM 87120, EE. UU.</p>
+  <p>Contenido educativo. No constituye asesoramiento financiero ni recomendación de inversión. Operar con CFDs, futuros y opciones conlleva un alto riesgo de pérdida. OFFLIT muestra datos de posicionamiento del mercado; no predice movimientos ni garantiza resultados. Rentabilidades pasadas no garantizan rentabilidades futuras.</p>
+  <p>Los datos de mercado proceden de proveedores institucionales con licencia; no se redistribuyen datos en bruto. TradingView es una marca de TradingView, Inc. · <a href="#" id="legal">Términos y privacidad</a></p>
+</div></footer>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const narrow = () => matchMedia('(max-width: 900px)').matches;
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+  const c=document.getElementById('scene'), x=c.getContext('2d');
+  const W=c.width,H=c.height;
+  const lo=3958, hi=4034;
+  // velas deterministas
+  let p=3996, candles=[], s=7; const rnd=()=>{ s=(s*16807)%2147483647; return s/2147483647; };
+  for(let i=0;i<40;i++){ const o=p; const d=(rnd()-0.5)*9+(i>14&&i<20?-2.2:0)+(i>24?1.3:0); const cl=o+d; candles.push({o,c:cl,h:Math.max(o,cl)+rnd()*4,l:Math.min(o,cl)-rnd()*4,v:.3+rnd()*.7}); p=cl; }
+  const last=candles[candles.length-1].c;
+  const zones=[
+    {k:'iman',p:3988.7,w:1.3,c:'--iman',n:'IMÁN',f:5,t:'Mayor bloque oculto junto al precio: atrae'},
+    {k:'techo',p:4021.9,w:1.3,c:'--techo',n:'TECHO',f:4,t:'Bloque oculto por encima: resistencia'},
+    {k:'suelo',p:3977.0,w:1.3,c:'--suelo',n:'SUELO',f:4,t:'Bloque oculto por debajo: soporte'},
+    {k:'liq',p:4005.5,w:1.1,c:'--liq',n:'LIQUIDEZ',f:1,t:'Cluster de volumen: zona de liquidez'},
+  ];
+  // perfil de volumen oculto (derecha) determinista
+  const depth=Array.from({length:38},(_,i)=>{ const pr=lo+(hi-lo)*(i+.5)/38; let v=.15+rnd()*.25; zones.forEach(z=>{ if(Math.abs(pr-z.p)<1.6) v=.75+rnd()*.25; }); return {pr,v}; });
+
+  const ease=(a,b,t)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+  const sm=t=>t*t*(3-2*t);
+
+  function draw(prog){
+    // prog 0..1 → fases
+    const fFut=sm(ease(.14,.26,prog)), fOpt=sm(ease(.30,.42,prog));
+    const fZ=[sm(ease(.46,.56,prog)), sm(ease(.60,.70,prog)), sm(ease(.62,.72,prog)), sm(ease(.76,.86,prog))];
+    const fBias=sm(ease(.80,.9,prog));
+    const padL=24, padB=40+70*fFut, padR=60+210*fOpt, padT=30;
+    const y=v=>padT+(hi-v)/(hi-lo)*(H-padT-padB);
+    const plotR=W-padR;
+    x.clearRect(0,0,W,H); x.fillStyle=css('--panel'); x.fillRect(0,0,W,H);
+    // rejilla
+    x.strokeStyle=css('--line'); x.lineWidth=1; x.font='17px JetBrains Mono, monospace'; x.fillStyle=css('--dim'); x.textAlign='left';
+    for(let g=3960; g<=4030; g+=10){ x.beginPath(); x.moveTo(padL,y(g)+.5); x.lineTo(plotR,y(g)+.5); x.stroke(); x.fillText(g.toLocaleString('es-ES'), plotR-70, y(g)-5); }
+    // zonas
+    zones.forEach((z,i)=>{ const f=fZ[i]; if(f<=0) return; const col=css(z.c); x.globalAlpha=.24*f; x.fillStyle=col; const top=y(z.p+z.w), bot=y(z.p-z.w); const wdt=(plotR-padL)*f; x.fillRect(padL, top, wdt, bot-top); x.globalAlpha=1; });
+    // velas
+    const cw=(plotR-padL)/candles.length;
+    candles.forEach((k,i)=>{ const cx=padL+i*cw+cw/2; const up=k.c>=k.o; const col= up?css('--suelo'):css('--techo'); x.strokeStyle=x.fillStyle=col; x.lineWidth=2;
+      x.beginPath(); x.moveTo(cx,y(k.h)); x.lineTo(cx,y(k.l)); x.stroke(); const t=y(Math.max(k.o,k.c)),b=y(Math.min(k.o,k.c)); x.fillRect(cx-cw*.3,t,cw*.6,Math.max(2,b-t)); });
+    // volumen de futuros (abajo)
+    if(fFut>0){ const base=H-40, hmax=62*fFut; x.globalAlpha=.9;
+      candles.forEach((k,i)=>{ const cx=padL+i*cw+cw/2; x.fillStyle=k.c>=k.o?css('--suelo'):css('--techo'); x.globalAlpha=.45; x.fillRect(cx-cw*.3, base-k.v*hmax, cw*.6, k.v*hmax); });
+      x.globalAlpha=fFut; x.fillStyle=css('--muted'); x.font='13px JetBrains Mono, monospace'; x.fillText('FUTUROS · volumen real (GC)', padL, H-12); x.globalAlpha=1; }
+    // volumen oculto (derecha)
+    if(fOpt>0){ const x0=plotR+16, wmax=170*fOpt; x.globalAlpha=1;
+      depth.forEach(d=>{ const yy=y(d.pr); const h=(H-padT-padB)/depth.length*.72; x.fillStyle=css('--brass'); x.globalAlpha=.25+.55*d.v*fOpt; x.fillRect(x0, yy-h/2, d.v*wmax, h); });
+      x.globalAlpha=fOpt; x.fillStyle=css('--muted'); x.font='13px JetBrains Mono, monospace'; x.fillText('VOLUMEN OCULTO', x0, padT-8); x.fillText('+ puts / calls por precio', x0, H-12); x.globalAlpha=1; }
+    // etiquetas de zonas (solo cuando hay panel derecho o en fase zonas)
+    zones.forEach((z,i)=>{ const f=fZ[i]; if(f<=0) return; const yy=y(z.p); const col=css(z.c); const lx=plotR+16, lw=Math.min(210, W-lx-10);
+      x.globalAlpha=f; x.fillStyle=col; x.fillRect(lx, yy-22, lw, 44); x.fillStyle='#0c0e13'; x.font='600 15px JetBrains Mono, monospace'; x.textAlign='left';
+      x.fillText(`${z.n} · ${z.p.toLocaleString('es-ES',{minimumFractionDigits:1})} · f${z.f}`, lx+8, yy-4); x.font='12px Figtree, sans-serif'; x.fillText(z.t.length>34?z.t.slice(0,33)+'…':z.t, lx+8, yy+14); x.globalAlpha=1; });
+    // precio
+    x.strokeStyle=css('--muted'); x.setLineDash([4,6]); x.beginPath(); x.moveTo(padL,y(last)+.5); x.lineTo(plotR,y(last)+.5); x.stroke(); x.setLineDash([]);
+    x.fillStyle=css('--fg'); x.fillRect(plotR-64, y(last)-13, 60, 26); x.fillStyle=css('--bg'); x.font='600 14px JetBrains Mono, monospace'; x.textAlign='center'; x.fillText(last.toFixed(0), plotR-34, y(last)+5); x.textAlign='left';
+    // cabecera
+    document.getElementById('sc-mode').textContent = fZ[0]>0 ? 'OFFLIT Intradía' : fOpt>0 ? 'opciones y volumen oculto' : fFut>0 ? 'futuros' : 'tu bróker';
+    document.getElementById('sc-bias').classList.toggle('hidden', fBias<=0);
+    // captions
+    const idx = prog<.14?0:prog<.30?1:prog<.46?2:prog<.60?3:prog<.76?4:5;
+    document.querySelectorAll('.cap').forEach(el=>el.classList.toggle('on', +el.dataset.i===idx));
+  }
+
+  const story=document.getElementById('historia');
+  function progress(){ if(reduce||narrow()) return 1; const r=story.getBoundingClientRect(); const total=story.offsetHeight-innerHeight; return Math.max(0,Math.min(1,-r.top/total)); }
+  let raf=0; function onScroll(){ if(raf) return; raf=requestAnimationFrame(()=>{ raf=0; draw(progress()); }); }
+  draw(progress());
+  addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',onScroll);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',onScroll);
+  new MutationObserver(onScroll).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+  document.getElementById('legal').addEventListener('click',e=>e.preventDefault());
+})();
+</script>
