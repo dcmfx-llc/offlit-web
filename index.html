@@ -197,6 +197,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:co
 .plan .save{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--suelo);margin:0}
 .plan .btn{justify-self:start}
 .plan .save:empty{display:none}
+.btn[aria-disabled="true"]{opacity:.55;cursor:default;pointer-events:none}
 .bill{display:inline-flex;border:1px solid var(--line2);border-radius:3px;padding:3px;gap:3px;justify-self:start;flex-wrap:wrap}
 .bill button,.pick button{font:inherit;font-size:.92rem;font-weight:500;color:var(--muted);background:transparent;border:0;border-radius:2px;padding:9px 16px;cursor:pointer}
 .bill button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
@@ -609,7 +610,12 @@ footer{border-top:0}
   function pintar(){
     sec.querySelectorAll('[data-mes]').forEach(e => { e.textContent = e.dataset[bill]; });
     sec.querySelectorAll('.bill button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.bill === bill)));
-    sec.querySelectorAll('[data-buy]').forEach(a => { a.href = LINKS[bill][a.dataset.buy] || '#acceso'; });
+    sec.querySelectorAll('[data-buy]').forEach(a => {
+      const url = LINKS[bill][a.dataset.buy];
+      a.textContent = url ? 'Empezar' : 'Muy pronto';
+      a.setAttribute('aria-disabled', String(!url));
+      if (url) a.href = url; else a.removeAttribute('href');
+    });
     document.getElementById('anual-nota').hidden = bill !== 'ano';
   }
   sec.querySelectorAll('.bill button').forEach(b => b.addEventListener('click', () => { bill = b.dataset.bill; pintar(); }));
