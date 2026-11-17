@@ -143,7 +143,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:co
 .zone p b{color:var(--fg2);font-weight:600}
 
 /* modules */
-.mods{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.mods{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
 @media (max-width:980px){.mods{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){.mods{grid-template-columns:1fr}}
 .mod{display:grid;gap:10px;padding-top:18px;border-top:1px solid var(--line2)}
@@ -184,6 +184,23 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:co
 .plan ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;color:var(--muted);font-size:.95rem}
 .plan ul li{padding-left:18px;position:relative}
 .plan ul li::before{content:"";position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--dim)}
+.plans.three{grid-template-columns:repeat(3,1fr);max-width:none}
+.plans.packs{max-width:none}
+@media (max-width:900px){.plans.three{grid-template-columns:1fr}}
+.plan h3{font-size:1.5rem}
+.plan .desc{color:var(--fg2);font-size:.97rem;margin:0}
+.plan .price{font-size:2.5rem}
+.plan .save{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--suelo);margin:0}
+.plan .btn{justify-self:start}
+.plan .save:empty{display:none}
+.bill{display:inline-flex;border:1px solid var(--line2);border-radius:3px;padding:3px;gap:3px;justify-self:start;flex-wrap:wrap}
+.bill button,.pick button{font:inherit;font-size:.92rem;font-weight:500;color:var(--muted);background:transparent;border:0;border-radius:2px;padding:9px 16px;cursor:pointer}
+.bill button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.bill button small{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;margin-left:6px;opacity:.8}
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pick button{border:1px solid var(--line2);padding:8px 12px;font-size:.88rem}
+.pick button[aria-pressed="true"]{border-color:var(--brass);color:var(--fg)}
+.subhead{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:14px 0 0}
 
 /* faq */
 details{border-top:1px solid var(--line);padding:18px 0}
@@ -307,6 +324,7 @@ footer .brand span{color:var(--muted)}
   <div class="mods">
     <div class="mod"><div class="k">Intradía</div><h3>Las zonas de hoy</h3><p>Volumen oculto de la sesión en curso. De 1 minuto a 1 hora. Cada día las de ese día: las de ayer ya no valen.</p></div>
     <div class="mod"><div class="k">Swing</div><h3>Los muros del mes</h3><p>Posicionamiento en opciones a semanas y meses vista. De 4 horas a diario. Los niveles alrededor de los cuales se construye el mes.</p></div>
+    <div class="mod"><div class="k">Acciones</div><h3>Valor a valor</h3><p>Los muros de opciones de 110 acciones y 11 ETF sectoriales de EE. UU. De 4 horas a diario. Con el dinero que entra o sale de cada valor y hacia qué sectores rota.</p></div>
     <div class="mod"><div class="k">Sesgo</div><h3>Con quién va el dinero</h3><p>Comprador, vendedor o neutro, según cómo ha entrado el dinero en opciones ese día. Para no operar contra la corriente.</p></div>
     <div class="mod"><div class="k">Fuerza 1–5</div><h3>Solo lo que importa</h3><p>Cada zona lleva su fuerza. Filtra las flojas con un clic y quédate con los tres niveles que cuentan.</p></div>
   </div>
@@ -342,6 +360,7 @@ footer .brand span{color:var(--muted)}
       <ul class="list">
         <li>Llevas más de un año con análisis técnico y sientes que no sabes dónde vas.</li>
         <li>Operas índices, oro, plata o petróleo en CFD y quieres ver lo que mueve tu precio, no el reflejo.</li>
+        <li>Sigues acciones de EE. UU. y quieres saber dónde está posicionado el dinero en cada una y entre qué sectores se mueve.</li>
         <li>Te han hablado de opciones y volumen oculto, no lo entiendes, y no quieres estudiar dos años para usarlo.</li>
         <li>Prefieres tres niveles con razón a veinte líneas sin ella.</li>
         <li>Quieres tu propio criterio, no señales de otro.</li>
@@ -352,7 +371,7 @@ footer .brand span{color:var(--muted)}
       <ul class="list no">
         <li>Buscas que algo te diga cuándo comprar y cuándo vender. Esto te enseña el terreno; la decisión es tuya.</li>
         <li>Esperas una promesa de rentabilidad. Aquí no hay ninguna, y desconfía de quien te la haga.</li>
-        <li>Operas solo acciones o cripto. Por ahora cubrimos índices, metales y energía.</li>
+        <li>Operas solo divisas o acciones de fuera de EE. UU. Por ahora cubrimos índices, metales, energía, bitcoin y acciones estadounidenses.</li>
         <li>No usas TradingView.</li>
       </ul>
     </div>
@@ -361,22 +380,70 @@ footer .brand span{color:var(--muted)}
 
 <section class="rule" id="acceso"><div class="wrap stack">
   <div class="eyebrow">Acceso</div>
-  <h2 class="prose">Una suscripción. Las zonas de cada día, en tu gráfico.</h2>
-  <div class="plans">
-    <div class="plan">
-      <div class="tag">Mensual</div>
-      <div class="price">57,94 $<small> / mes</small></div>
-      <ul><li>Indicador Intradía y Swing</li><li>Panel de sesgo del día</li><li>Ocho activos: índices, metales y energía</li><li>Actualización automática cada noche</li><li>Guía de lectura de las zonas</li><li>Cancela cuando quieras</li></ul>
-      <a class="btn" href="https://buy.stripe.com/00w5kDfen5kQbwE7O69fW05">Empezar</a>
+  <h2 class="prose">Tres indicadores. Elige uno, dos o los tres.</h2>
+  <div class="bill" role="group" aria-label="Forma de pago">
+    <button type="button" data-bill="mes" aria-pressed="true">Mensual</button>
+    <button type="button" data-bill="ano" aria-pressed="false">Anual<small>2 meses gratis</small></button>
+  </div>
+
+  <p class="subhead">Por separado</p>
+  <div class="plans three">
+    <div class="plan" data-plan="intradia">
+      <div class="tag">Intradía</div>
+      <h3>Las zonas de hoy</h3>
+      <p class="desc">Volumen oculto de la sesión en curso, en gráficos de 1 minuto a 1 hora.</p>
+      <div class="price"><span data-mes="34,94 $" data-ano="349 $">34,94 $</span><small data-mes=" / mes" data-ano=" / año"> / mes</small></div>
+      <p class="save" data-mes="" data-ano="Equivale a 29,08 $ al mes"></p>
+      <ul><li>Diez activos: índices, metales, energía, bitcoin y cobre</li><li>Panel de sesgo del día</li><li>Actualización cada noche</li><li>Guía de lectura de las zonas</li><li>Cancela cuando quieras</li></ul>
+      <a class="btn line" href="#acceso" data-buy="intradia">Empezar</a>
     </div>
-    <div class="plan best">
-      <div class="tag">Anual · 2 meses gratis</div>
-      <div class="price">579 $<small> / año</small><br><small>equivale a 48,25 $ al mes · ahorras 116 $</small></div>
-      <ul><li>Todo lo del mensual</li><li>Nuevos activos según se añadan</li><li>Acceso prioritario a nuevas lecturas (cambio de régimen de gamma)</li><li>Sesión de lectura en directo al entrar</li></ul>
-      <a class="btn" href="https://buy.stripe.com/00w6oHaY728EbwEecu9fW06">Empezar</a>
+    <div class="plan" data-plan="swing">
+      <div class="tag">Swing</div>
+      <h3>Los muros del mes</h3>
+      <p class="desc">Posicionamiento en opciones a semanas y meses vista, en gráficos de 4 horas a diario.</p>
+      <div class="price"><span data-mes="34,94 $" data-ano="349 $">34,94 $</span><small data-mes=" / mes" data-ano=" / año"> / mes</small></div>
+      <p class="save" data-mes="" data-ano="Equivale a 29,08 $ al mes"></p>
+      <ul><li>Los mismos diez activos</li><li>Niveles de opciones del S&amp;P 500 y del Nasdaq</li><li>Actualización cada noche</li><li>Guía de lectura de las zonas</li><li>Cancela cuando quieras</li></ul>
+      <a class="btn line" href="#acceso" data-buy="swing">Empezar</a>
+    </div>
+    <div class="plan" data-plan="acciones">
+      <div class="tag">Acciones</div>
+      <h3>Valor a valor</h3>
+      <p class="desc">Muros de opciones de 110 acciones y 11 ETF sectoriales de EE. UU., en gráficos de 4 horas a diario.</p>
+      <div class="price"><span data-mes="34,94 $" data-ano="349 $">34,94 $</span><small data-mes=" / mes" data-ano=" / año"> / mes</small></div>
+      <p class="save" data-mes="" data-ano="Equivale a 29,08 $ al mes"></p>
+      <ul><li>Dinero que entra o sale de cada valor</li><li>Rotación entre sectores: ganadores y perdedores</li><li>Actualización cada noche</li><li>Guía de lectura de las zonas</li><li>Cancela cuando quieras</li></ul>
+      <a class="btn line" href="#acceso" data-buy="acciones">Empezar</a>
     </div>
   </div>
-  <p class="fine prose">Al pagar te pedimos tu nombre de usuario de TradingView. El acceso al indicador se activa en tu cuenta en menos de una hora y se renueva mientras la suscripción esté activa. Si la cancelas, el acceso termina al final del periodo pagado.</p>
+
+  <p class="subhead">En pack</p>
+  <div class="plans packs">
+    <div class="plan" data-plan="pack2">
+      <div class="tag">Pack de dos</div>
+      <h3>Los dos que elijas</h3>
+      <div class="pick" role="group" aria-label="Qué dos indicadores">
+        <button type="button" data-pair="intradia-swing" aria-pressed="true">Intradía + Swing</button>
+        <button type="button" data-pair="intradia-acciones" aria-pressed="false">Intradía + Acciones</button>
+        <button type="button" data-pair="swing-acciones" aria-pressed="false">Swing + Acciones</button>
+      </div>
+      <div class="price"><span data-mes="57,94 $" data-ano="579 $">57,94 $</span><small data-mes=" / mes" data-ano=" / año"> / mes</small></div>
+      <p class="save" data-mes="Ahorras 11,94 $ al mes frente a comprarlos sueltos" data-ano="Equivale a 48,25 $ al mes · ahorras 119 $ al año frente a dos anuales sueltos">Ahorras 11,94 $ al mes frente a comprarlos sueltos</p>
+      <ul><li>Todo lo de los dos indicadores elegidos</li><li>Cancela cuando quieras</li></ul>
+      <a class="btn line" href="#acceso" data-buy="intradia-swing">Empezar</a>
+    </div>
+    <div class="plan best" data-plan="pack3">
+      <div class="tag">Pack completo</div>
+      <h3>Intradía, Swing y Acciones</h3>
+      <p class="desc">Índices, metales, energía y bitcoin de un minuto a diario, y las acciones de EE. UU. valor a valor.</p>
+      <div class="price"><span data-mes="79,94 $" data-ano="799 $">79,94 $</span><small data-mes=" / mes" data-ano=" / año"> / mes</small></div>
+      <p class="save" data-mes="Ahorras 24,88 $ al mes frente a comprarlos sueltos" data-ano="Equivale a 66,58 $ al mes · ahorras 248 $ al año frente a tres anuales sueltos">Ahorras 24,88 $ al mes frente a comprarlos sueltos</p>
+      <ul><li>Los tres indicadores</li><li>Nuevos activos según se añadan</li><li>Cancela cuando quieras</li></ul>
+      <a class="btn" href="#acceso" data-buy="pack3">Empezar</a>
+    </div>
+  </div>
+  <p class="fine prose" id="anual-nota" hidden>Con cualquier plan anual: dos meses gratis, sesión de lectura en directo al entrar y acceso prioritario a nuevas lecturas.</p>
+  <p class="fine prose">Al pagar te pedimos tu nombre de usuario de TradingView. El acceso a cada indicador se activa en tu cuenta en menos de una hora y se renueva mientras la suscripción esté activa. Si la cancelas, el acceso termina al final del periodo pagado.</p>
 </div></section>
 
 <section class="rule"><div class="wrap stack">
@@ -405,6 +472,29 @@ footer .brand span{color:var(--muted)}
   <p>Los datos de mercado proceden de proveedores institucionales con licencia; no se redistribuyen datos en bruto. TradingView es una marca de TradingView, Inc. · <a href="/legal/">Términos y privacidad</a> · <a href="/guia/">Guía de uso</a></p>
 </div></footer>
 
+<script>
+(function(){
+  // Enlaces de pago de Stripe por plan y periodo. Vacío = todavía sin enlace (el botón no lleva a ningún sitio).
+  const LINKS = {
+    mes: {intradia:"", swing:"", acciones:"", "intradia-swing":"", "intradia-acciones":"", "swing-acciones":"", pack3:""},
+    ano: {intradia:"", swing:"", acciones:"", "intradia-swing":"", "intradia-acciones":"", "swing-acciones":"", pack3:""}
+  };
+  const sec = document.getElementById('acceso'); if(!sec) return;
+  let bill = 'mes';
+  function pintar(){
+    sec.querySelectorAll('[data-mes]').forEach(e => { e.textContent = e.dataset[bill]; });
+    sec.querySelectorAll('.bill button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.bill === bill)));
+    sec.querySelectorAll('[data-buy]').forEach(a => { a.href = LINKS[bill][a.dataset.buy] || '#acceso'; });
+    document.getElementById('anual-nota').hidden = bill !== 'ano';
+  }
+  sec.querySelectorAll('.bill button').forEach(b => b.addEventListener('click', () => { bill = b.dataset.bill; pintar(); }));
+  sec.querySelectorAll('.pick button').forEach(b => b.addEventListener('click', () => {
+    sec.querySelectorAll('.pick button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    sec.querySelector('[data-plan="pack2"] [data-buy]').dataset.buy = b.dataset.pair; pintar();
+  }));
+  pintar();
+})();
+</script>
 <script>
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
