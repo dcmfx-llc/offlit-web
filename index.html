@@ -1,6 +1,10 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OFFLIT</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Identidad: terminal de grafito y marfil; un solo acento de latón envejecido. Las bandas de color
    del indicador (techo, suelo, imán, liquidez) son la única otra fuente de color.                    */
@@ -200,6 +204,20 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:co
 .pick{display:flex;flex-wrap:wrap;gap:8px}
 .pick button{border:1px solid var(--line2);padding:8px 12px;font-size:.88rem}
 .pick button[aria-pressed="true"]{border-color:var(--brass);color:var(--fg)}
+.mailgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:48px;align-items:start}
+@media (max-width:900px){.mailgrid{grid-template-columns:1fr;gap:28px}}
+.mailshot{margin:0}
+.mailshot img{display:block;width:100%;height:auto;border:1px solid var(--line2);border-radius:4px}
+.mailshot figcaption{font-size:.84rem;color:var(--dim);margin-top:10px}
+.steps{display:grid;gap:18px;margin:0;padding:0;list-style:none;counter-reset:st}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:6px 12px;counter-increment:st}
+.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--mono);font-size:.78rem;color:var(--brass);padding-top:.35em}
+.steps b{display:block;font-family:var(--display);font-weight:400;font-size:1.22rem;line-height:1.2}
+.steps span{grid-column:2;color:var(--muted);font-size:.97rem}
+.secs{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 28px}
+@media (max-width:640px){.secs{grid-template-columns:1fr}}
+.sec .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+.sec p{margin:4px 0 0;font-family:var(--mono);font-size:.8rem;line-height:1.7;color:var(--muted)}
 .subhead{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:14px 0 0}
 
 /* faq */
@@ -214,26 +232,86 @@ details p{margin-top:10px;color:var(--muted);max-width:64ch}
 footer{padding-block:48px;border-top:1px solid var(--line);color:var(--dim);font-size:.86rem}
 footer .brand span{color:var(--muted)}
 @media (prefers-reduced-motion:no-preference){.btn{transition:background .18s}}
+
+/* ── 2026-11 · lavado de cara: una sola familia sin serifa, más aire, tarjetas redondeadas, menos adornos ── */
+:root{--display:"Bricolage Grotesque","Figtree","Helvetica Neue",Arial,sans-serif;--r:16px}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.028em;line-height:1.04}
+h1{font-size:clamp(2.7rem,7.4vw,5.4rem);max-width:13ch}
+h2{font-size:clamp(1.9rem,4.4vw,3.2rem);line-height:1.08}
+h3{font-size:1.28rem;letter-spacing:-.015em;line-height:1.2}
+h1 i,h2 i,.statement i{font-style:normal;font-weight:inherit;color:inherit}
+.wrap{max-width:1080px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+section{padding-block:clamp(56px,8vw,112px)}
+.rule{border-top:0}
+.eyebrow{display:none}
+.stack{gap:28px}
+.lead{font-size:1.2rem;line-height:1.6}
+.btn{border-radius:999px;padding:15px 28px}
+header{border-bottom:0}
+.brand span{font-family:var(--body);font-weight:700;letter-spacing:.2em}
+.nav .btn{padding:10px 20px}
+.kicker,.mod .k,.inp .k,.plan .tag,.subhead,.sec .k{font-family:var(--body);text-transform:none;letter-spacing:0;font-size:.92rem;font-weight:600}
+.kicker{color:var(--brass)}
+.subhead{color:var(--muted);margin:10px 0 -8px}
+.frame{border-radius:var(--r)}
+.frame .top{font-family:var(--body);font-size:.84rem}
+.zones,.inputs,.plans,.plans.three{background:none;border:0;gap:14px}
+.zone,.inp,.plan{border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.zone .name{font-family:var(--body);font-weight:700;letter-spacing:.06em;font-size:.8rem}
+.mods{gap:28px}
+.mod{border-top:0;padding-top:0}
+.layer .n,.statement,.price{font-family:var(--display)}
+.layer .n{font-weight:600}
+.statement{font-weight:500;letter-spacing:-.02em;line-height:1.22;max-width:30ch}
+.plan{padding:28px 26px}
+.plan.best{border-color:var(--brass)}
+.price{font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.plan .price{font-size:2.6rem}
+.price small{font-weight:400;letter-spacing:0}
+.plan .save{font-family:var(--body);letter-spacing:0;font-size:.9rem;font-weight:500}
+.bill,.bill button,.pick button{border-radius:999px}
+.bill{padding:4px}
+.bill button small{font-family:var(--body);letter-spacing:0;font-size:.8rem;font-weight:400}
+.mailshot img{border-radius:var(--r)}
+.steps li{grid-template-columns:1fr;gap:4px}
+.steps li::before{content:none}
+.steps span{grid-column:auto}
+.sec p{font-family:var(--body);font-size:.9rem;line-height:1.6}
+.sealed{border-radius:var(--r)}
+.row .c{font-family:var(--body)}
+section.fold{padding-block:7px}
+details.more{border:1px solid var(--line);border-radius:var(--r);padding:0 26px;background:var(--bg2)}
+details.more:last-of-type{border-bottom:1px solid var(--line)}
+details.more summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font-family:var(--display);font-weight:600;font-size:1.3rem;letter-spacing:-.015em;line-height:1.2}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::after{content:"+";font-weight:400;font-size:1.6rem;color:var(--brass);flex:none}
+details.more[open] summary::after{content:"–"}
+.more-body{padding:6px 0 30px}
+details.more p{margin-top:0}
+footer{border-top:0}
+@media (max-width:640px){
+  .plan{padding:24px 20px}details.more{padding:0 18px}h1{font-size:clamp(2.5rem,12vw,3.4rem)}
+  .row{grid-template-columns:1fr;gap:6px}.row .c{white-space:normal}
+}
 </style>
 
 <header><div class="wrap nav">
   <a class="brand" href="#top" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
-  <nav class="navlinks"><a href="#capas">El problema</a><a href="#zonas">Las zonas</a><a href="#dentro">Qué tiene en cuenta</a><a href="#acceso">Acceso</a></nav>
-  <a class="btn" href="#acceso">Acceder</a>
+  <nav class="navlinks"><a href="#historia">Cómo funciona</a><a href="#zonas">Las zonas</a><a href="#correo">El correo diario</a><a href="#acceso">Precios</a></nav>
+  <a class="btn" href="#acceso">Ver precios</a>
 </div></header>
 
 <main id="top">
 
 <section class="hero">
   <div class="wrap stack" style="gap:30px">
-    <p class="kicker">Indicador para TradingView · Índices, metales y energía</p>
     <h1>Las zonas que el mercado <i>no enseña.</i></h1>
     <p class="lead prose">Cada mañana, antes de que abra Nueva York, OFFLIT dibuja en tu gráfico los precios donde bancos, fondos y creadores de mercado ya se han posicionado: volumen oculto, muros de opciones y coberturas. Traducidos al precio de tu bróker. Sin que tengas que entender una sola opción.</p>
     <div class="ctas">
-      <a class="btn" href="#acceso">Ver las zonas en mi gráfico</a>
+      <a class="btn" href="#acceso">Ver precios</a>
       <a class="btn line" href="#historia">Cómo funciona</a>
     </div>
-    <p class="fine">Se actualiza solo cada noche tras el cierre americano · US500 · USTECH · US30 · GER40 · XAUUSD · XAGUSD · USOIL · UKOIL</p>
+    <p class="fine">Indicadores para TradingView. Índices, metales, energía, bitcoin y 110 acciones de EE. UU. Se actualizan solos cada noche, tras el cierre americano.</p>
   </div>
 </section>
 
@@ -294,9 +372,8 @@ footer .brand span{color:var(--muted)}
   </div>
 </div></section>
 
-<section class="rule"><div class="wrap stack">
-  <div class="eyebrow">El coste de verlo por tu cuenta</div>
-  <h2 class="prose">Para ver esto sin OFFLIT, cada mañana tendrías que:</h2>
+<section class="rule fold"><div class="wrap stack">
+  <details class="more"><summary>Para ver esto sin OFFLIT, cada mañana tendrías que:</summary><div class="stack more-body">
   <div class="ledger">
     <div class="row"><div class="t">Pagar una plataforma de datos institucionales de opciones y volumen oculto<small>Y aprender a navegar unas cuarenta pantallas en inglés.</small></div><div class="c">75–375 $ / mes</div></div>
     <div class="row"><div class="t">Saber qué ETF representa a cada activo que operas<small>SPY no es US500 y GLD no es el oro. Cada precio se traduce con un ratio que cambia a diario.</small></div><div class="c">8 conversiones</div></div>
@@ -307,6 +384,7 @@ footer .brand span{color:var(--muted)}
     <div class="row sum"><div class="t">Cada mañana</div><div class="c">≈ 1 hora · 150 $ / mes · un máster en opciones</div></div>
   </div>
   <p class="prose muted">Por eso el 95 % no lo mira. No porque no sirva. Porque es un trabajo entero.</p>
+  </div></details>
 </div></section>
 
 <section class="rule" id="zonas"><div class="wrap stack">
@@ -330,9 +408,8 @@ footer .brand span{color:var(--muted)}
   </div>
 </div></section>
 
-<section class="rule" id="dentro"><div class="wrap stack">
-  <div class="eyebrow">Qué tiene en cuenta</div>
-  <h2 class="prose">Lo que entra en el cálculo, en lenguaje claro.</h2>
+<section class="rule fold" id="dentro"><div class="wrap stack">
+  <details class="more"><summary>Lo que entra en el cálculo, en lenguaje claro.</summary><div class="stack more-body">
   <p class="prose muted">Te decimos qué se mira. Cómo se pondera y se filtra es lo que hace que esto valga, y eso no sale de aquí.</p>
   <div class="inputs">
     <div class="inp"><div class="k">Volumen oculto por niveles</div><p><b>Lo que se cruza fuera de la pantalla</b>, precio a precio, en el ETF que representa a tu activo. Dónde se concentra, cuánto pesa frente al volumen visible y a qué distancia está del cierre.</p></div>
@@ -346,6 +423,7 @@ footer .brand span{color:var(--muted)}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="10" width="16" height="11" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
     <p>El código del indicador está sellado en TradingView: nadie puede leerlo ni copiarlo. Los datos fuente no se redistribuyen; lo que recibes son las zonas ya calculadas.</p>
   </div>
+  </div></details>
 </div></section>
 
 <section class="rule"><div class="wrap">
@@ -378,6 +456,52 @@ footer .brand span{color:var(--muted)}
   </div>
 </div></section>
 
+<section class="rule" id="correo"><div class="wrap stack">
+  <div class="eyebrow">Cada mañana</div>
+  <h2 class="prose">Además del gráfico, un correo que te cuenta <i>por qué.</i></h2>
+  <p class="lead prose">Las zonas te dicen dónde. El correo de OFFLIT · Acciones te dice hacia dónde se está moviendo el dinero y qué puede haber detrás. Este es uno real, el del 17 de noviembre de 2026.</p>
+  <div class="mailgrid">
+    <div class="stack" style="gap:34px">
+      <ul class="steps">
+        <li><b>Rotación por sectores</b><span>Los diez sectores ordenados por el dinero de opciones de la sesión: lo apostado a subida menos lo apostado a bajada o a cubrirse. De un vistazo, quién gana y quién pierde.</span></li>
+        <li><b>Hipótesis de la rotación</b><span>Si el dinero sale de lo cíclico y entra en lo defensivo, si es una salida general o si a un sector lo está arrastrando una sola empresa.</span></li>
+        <li><b>Contexto de noticias</b><span>Qué ha pasado en la sesión que encaja con ese movimiento. Cada dato se contrasta en al menos dos medios de referencia antes de enviarse; lo que no se confirma, no sale.</span></li>
+        <li><b>Dónde entra y de dónde sale</b><span>Los cinco valores con más dinero comprador y los cinco con más dinero vendedor.</span></li>
+      </ul>
+      <div class="stack" style="gap:16px">
+        <p class="subhead" style="margin:0">Los 110 valores y 11 ETF sectoriales que cubre</p>
+        <div class="secs">
+      <div class="sec"><div class="k">ETF sectoriales (11)</div><p>XLK, XLC, XLY, XLP, XLF, XLV, XLE, XLI, XLB, XLU, XLRE</p></div>
+      <div class="sec"><div class="k">Tecnología (20)</div><p>AAPL, MSFT, NVDA, AVGO, AMD, INTC, MU, SMCI, QCOM, ADBE, PLTR, ORCL, CRM, TSM, ASML, AMAT, LRCX, NOW, CRWD, PANW</p></div>
+      <div class="sec"><div class="k">Comunicación (8)</div><p>GOOGL, META, NFLX, DIS, T, VZ, TMUS, CMCSA</p></div>
+      <div class="sec"><div class="k">Consumo discrecional (12)</div><p>AMZN, TSLA, SBUX, HD, NKE, MCD, UBER, BABA, BKNG, ABNB, GM, LOW</p></div>
+      <div class="sec"><div class="k">Consumo básico (8)</div><p>COST, PEP, WMT, KO, PG, TGT, PM, MDLZ</p></div>
+      <div class="sec"><div class="k">Finanzas (14)</div><p>JPM, BAC, GS, MS, WFC, C, V, COIN, HOOD, MSTR, MA, PYPL, AXP, SCHW</p></div>
+      <div class="sec"><div class="k">Salud (11)</div><p>LLY, UNH, JNJ, PFE, MRK, ABBV, AMGN, GILD, VRTX, MRNA, ISRG</p></div>
+      <div class="sec"><div class="k">Energía (8)</div><p>XOM, CVX, OXY, SLB, COP, EOG, MPC, LNG</p></div>
+      <div class="sec"><div class="k">Industria y defensa (14)</div><p>BA, LMT, RTX, NOC, CAT, GE, RKLB, GD, LHX, HON, DE, UNP, DAL, UAL</p></div>
+      <div class="sec"><div class="k">Materiales y oro (7)</div><p>NEM, FCX, B, LIN, AA, NUE, AEM</p></div>
+      <div class="sec"><div class="k">Eléctricas e inmobiliario (8)</div><p>NEE, VST, AMT, CEG, SO, DUK, PLD, O</p></div>
+        </div>
+      </div>
+    </div>
+    <figure class="mailshot">
+      <img src="/img/mail-acciones.webp" width="1200" height="3812" loading="lazy" alt="Correo diario de OFFLIT Acciones del 17 de noviembre de 2026: tabla de rotación por sectores, hipótesis de rotación defensiva, contexto de noticias y valores con más dinero comprador y vendedor.">
+      <figcaption>Correo real de OFFLIT · Acciones. Es una lectura para contrastar con tu propio contexto, no una señal.</figcaption>
+    </figure>
+  </div>
+  <div class="mailgrid" style="margin-top:28px">
+    <div class="stack">
+      <h3>Con Intradía y Swing, el aviso de cada noche.</h3>
+      <p class="lead prose" style="margin:0">Cuando las zonas del día están publicadas te llega un correo corto: el recordatorio para actualizar el indicador y el sesgo de cada activo según el flujo de opciones de la sesión.</p>
+    </div>
+    <figure class="mailshot">
+      <img src="/img/mail-diario.webp" width="1200" height="2194" loading="lazy" alt="Correo diario de OFFLIT del 17 de noviembre de 2026: recordatorio de actualización y sesgo comprador, vendedor o neutro de cada uno de los diez activos.">
+      <figcaption>Correo real de OFFLIT · Intradía y Swing.</figcaption>
+    </figure>
+  </div>
+</div></section>
+
 <section class="rule" id="acceso"><div class="wrap stack">
   <div class="eyebrow">Acceso</div>
   <h2 class="prose">Tres indicadores. Elige uno, dos o los tres.</h2>
@@ -391,7 +515,7 @@ footer .brand span{color:var(--muted)}
     <div class="plan" data-plan="intradia">
       <div class="tag">Intradía</div>
       <h3>Las zonas de hoy</h3>
-      <p class="desc">Volumen oculto de la sesión en curso, en gráficos de 1 minuto a 1 hora.</p>
+      <p class="desc">Volumen oculto de la sesión en curso, en gráficos de 1 minuto a 1 hora. Funciona solo, pero una zona del día pesa más cuando coincide con un muro del Swing.</p>
       <div class="price"><span data-mes="34,94 $" data-ano="349 $">34,94 $</span><small data-mes=" / mes" data-ano=" / año"> / mes</small></div>
       <p class="save" data-mes="" data-ano="Equivale a 29,08 $ al mes"></p>
       <ul><li>Diez activos: índices, metales, energía, bitcoin y cobre</li><li>Panel de sesgo del día</li><li>Actualización cada noche</li><li>Guía de lectura de las zonas</li><li>Cancela cuando quieras</li></ul>
@@ -400,7 +524,7 @@ footer .brand span{color:var(--muted)}
     <div class="plan" data-plan="swing">
       <div class="tag">Swing</div>
       <h3>Los muros del mes</h3>
-      <p class="desc">Posicionamiento en opciones a semanas y meses vista, en gráficos de 4 horas a diario.</p>
+      <p class="desc">Posicionamiento en opciones a semanas y meses vista, en gráficos de 4 horas a diario. Es el marco con el que se confirman las zonas del Intradía.</p>
       <div class="price"><span data-mes="34,94 $" data-ano="349 $">34,94 $</span><small data-mes=" / mes" data-ano=" / año"> / mes</small></div>
       <p class="save" data-mes="" data-ano="Equivale a 29,08 $ al mes"></p>
       <ul><li>Los mismos diez activos</li><li>Niveles de opciones del S&amp;P 500 y del Nasdaq</li><li>Actualización cada noche</li><li>Guía de lectura de las zonas</li><li>Cancela cuando quieras</li></ul>
@@ -422,6 +546,7 @@ footer .brand span{color:var(--muted)}
     <div class="plan" data-plan="pack2">
       <div class="tag">Pack de dos</div>
       <h3>Los dos que elijas</h3>
+      <p class="desc">La pareja más habitual es Intradía + Swing: el Intradía marca las zonas del día y el Swing confirma cuáles tienen detrás un muro del mes.</p>
       <div class="pick" role="group" aria-label="Qué dos indicadores">
         <button type="button" data-pair="intradia-swing" aria-pressed="true">Intradía + Swing</button>
         <button type="button" data-pair="intradia-acciones" aria-pressed="false">Intradía + Acciones</button>
@@ -460,7 +585,7 @@ footer .brand span{color:var(--muted)}
 
 <section class="rule"><div class="wrap stack">
   <h2 class="prose">Mañana a las nueve puedes seguir mirando el reflejo. O abrir el gráfico y ver <i>dónde está el dinero.</i></h2>
-  <div class="ctas"><a class="btn" href="#acceso">Ver las zonas en mi gráfico</a></div>
+  <div class="ctas"><a class="btn" href="#acceso">Ver precios</a></div>
 </div></section>
 
 </main>
