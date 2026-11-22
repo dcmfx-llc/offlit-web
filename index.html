@@ -294,11 +294,18 @@ footer{border-top:0}
   .plan{padding:24px 20px}details.more{padding:0 18px}h1{font-size:clamp(2.5rem,12vw,3.4rem)}
   .row{grid-template-columns:1fr;gap:6px}.row .c{white-space:normal}
 }
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chips span{font-family:var(--mono);font-size:.8rem;padding:6px 10px;border:1px solid var(--line2);border-radius:3px;background:var(--panel)}
+.chips small{color:var(--muted);font-family:var(--sans,inherit);margin-left:4px}
+.sector{padding:16px 0;border-top:1px solid var(--line)}
+.cubre{display:grid;gap:36px}
+.cubre details summary{cursor:pointer;font-weight:600;padding:14px 0}
 </style>
 
 <header><div class="wrap nav">
   <a class="brand" href="#top" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
-  <nav class="navlinks"><a href="#historia">Cómo funciona</a><a href="#zonas">Las zonas</a><a href="#correo">El correo diario</a><a href="#acceso">Precios</a></nav>
+  <nav class="navlinks"><a href="#historia">Cómo funciona</a><a href="#zonas">Las zonas</a><a href="#correo">El correo diario</a><a href="#activos">Activos</a><a href="#acceso">Precios</a><a href="https://t.me/offlit_io" target="_blank" rel="noopener">Telegram</a></nav>
   <a class="btn" href="#acceso">Ver precios</a>
 </div></header>
 
@@ -503,6 +510,23 @@ footer{border-top:0}
   </div>
 </div></section>
 
+<section class="rule" id="activos"><div class="wrap stack">
+  <div class="eyebrow">Qué cubre</div>
+  <h2 class="prose">Diez activos y 121 valores, <i>uno a uno.</i></h2>
+  <div class="cubre">
+    <div>
+      <h3>OFFLIT · Intradía y OFFLIT · Swing</h3>
+      <p class="muted">Los mismos diez activos en los dos indicadores. Vale cualquier bróker de TradingView.</p>
+      <div class="chips"><span>US500 <small>S&amp;P 500</small></span><span>USTECH <small>Nasdaq 100</small></span><span>US30 <small>Dow Jones</small></span><span>GER40 <small>DAX</small></span><span>XAUUSD <small>Oro</small></span><span>XAGUSD <small>Plata</small></span><span>USOIL <small>Petróleo WTI</small></span><span>UKOIL <small>Petróleo Brent</small></span><span>BTCUSD <small>Bitcoin</small></span><span>COPPER <small>Cobre</small></span></div>
+    </div>
+    <div>
+      <h3>OFFLIT · Acciones</h3>
+      <p class="muted">121 acciones y ETF de Estados Unidos, ordenados por sectores para ver de dónde sale el dinero y a dónde va.</p>
+      <details><summary>Ver la lista completa por sectores</summary><div class="sector"><b>ETF sectoriales</b> <span class="muted">· 11</span><div class="chips"><span>XLK</span><span>XLC</span><span>XLY</span><span>XLP</span><span>XLF</span><span>XLV</span><span>XLE</span><span>XLI</span><span>XLB</span><span>XLU</span><span>XLRE</span></div></div><div class="sector"><b>Tecnología</b> <span class="muted">· 20</span><div class="chips"><span>AAPL</span><span>MSFT</span><span>NVDA</span><span>AVGO</span><span>AMD</span><span>INTC</span><span>MU</span><span>SMCI</span><span>QCOM</span><span>ADBE</span><span>PLTR</span><span>ORCL</span><span>CRM</span><span>TSM</span><span>ASML</span><span>AMAT</span><span>LRCX</span><span>NOW</span><span>CRWD</span><span>PANW</span></div></div><div class="sector"><b>Comunicación</b> <span class="muted">· 8</span><div class="chips"><span>GOOGL</span><span>META</span><span>NFLX</span><span>DIS</span><span>T</span><span>VZ</span><span>TMUS</span><span>CMCSA</span></div></div><div class="sector"><b>Consumo discrecional</b> <span class="muted">· 12</span><div class="chips"><span>AMZN</span><span>TSLA</span><span>SBUX</span><span>HD</span><span>NKE</span><span>MCD</span><span>UBER</span><span>BABA</span><span>BKNG</span><span>ABNB</span><span>GM</span><span>LOW</span></div></div><div class="sector"><b>Consumo básico</b> <span class="muted">· 8</span><div class="chips"><span>COST</span><span>PEP</span><span>WMT</span><span>KO</span><span>PG</span><span>TGT</span><span>PM</span><span>MDLZ</span></div></div><div class="sector"><b>Finanzas</b> <span class="muted">· 14</span><div class="chips"><span>JPM</span><span>BAC</span><span>GS</span><span>MS</span><span>WFC</span><span>C</span><span>V</span><span>COIN</span><span>HOOD</span><span>MSTR</span><span>MA</span><span>PYPL</span><span>AXP</span><span>SCHW</span></div></div><div class="sector"><b>Salud</b> <span class="muted">· 11</span><div class="chips"><span>LLY</span><span>UNH</span><span>JNJ</span><span>PFE</span><span>MRK</span><span>ABBV</span><span>AMGN</span><span>GILD</span><span>VRTX</span><span>MRNA</span><span>ISRG</span></div></div><div class="sector"><b>Energía</b> <span class="muted">· 8</span><div class="chips"><span>XOM</span><span>CVX</span><span>OXY</span><span>SLB</span><span>COP</span><span>EOG</span><span>MPC</span><span>LNG</span></div></div><div class="sector"><b>Industria y defensa</b> <span class="muted">· 14</span><div class="chips"><span>BA</span><span>LMT</span><span>RTX</span><span>NOC</span><span>CAT</span><span>GE</span><span>RKLB</span><span>GD</span><span>LHX</span><span>HON</span><span>DE</span><span>UNP</span><span>DAL</span><span>UAL</span></div></div><div class="sector"><b>Materiales y oro</b> <span class="muted">· 7</span><div class="chips"><span>NEM</span><span>FCX</span><span>B</span><span>LIN</span><span>AA</span><span>NUE</span><span>AEM</span></div></div><div class="sector"><b>Eléctricas e inmobiliario</b> <span class="muted">· 8</span><div class="chips"><span>NEE</span><span>VST</span><span>AMT</span><span>CEG</span><span>SO</span><span>DUK</span><span>PLD</span><span>O</span></div></div></details>
+    </div>
+  </div>
+</div></section>
+
 <section class="rule" id="acceso"><div class="wrap stack">
   <div class="eyebrow">Acceso</div>
   <h2 class="prose">Tres indicadores. Elige uno, dos o los tres.</h2>
@@ -586,7 +610,7 @@ footer{border-top:0}
 
 <section class="rule"><div class="wrap stack">
   <h2 class="prose">Mañana a las nueve puedes seguir mirando el reflejo. O abrir el gráfico y ver <i>dónde está el dinero.</i></h2>
-  <div class="ctas"><a class="btn" href="#acceso">Ver precios</a></div>
+  <div class="ctas"><a class="btn" href="#acceso">Ver precios</a><a href="https://t.me/offlit_io" target="_blank" rel="noopener" style="align-self:center">Canal de Telegram de OFFLIT →</a></div>
 </div></section>
 
 </main>
@@ -595,7 +619,7 @@ footer{border-top:0}
   <a class="brand" href="#top" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
   <p>Un producto de DCM FX, LLC · 6300 Riverside Plaza NW, Suite 100, Albuquerque, NM 87120, EE. UU.</p>
   <p>Contenido educativo. No constituye asesoramiento financiero ni recomendación de inversión. Operar con CFDs, futuros y opciones conlleva un alto riesgo de pérdida. OFFLIT muestra datos de posicionamiento del mercado; no predice movimientos ni garantiza resultados. Rentabilidades pasadas no garantizan rentabilidades futuras.</p>
-  <p>Los datos de mercado proceden de proveedores institucionales con licencia; no se redistribuyen datos en bruto. TradingView es una marca de TradingView, Inc. · <a href="/legal/">Términos y privacidad</a> · <a href="/guia/">Guía de uso</a></p>
+  <p>Los datos de mercado proceden de proveedores institucionales con licencia; no se redistribuyen datos en bruto. TradingView es una marca de TradingView, Inc. · <a href="/legal/">Términos y privacidad</a> · <a href="/guia/">Guía de uso</a> · <a href="https://t.me/offlit_io" target="_blank" rel="noopener">Canal de Telegram</a></p>
 </div></footer>
 
 <script>
