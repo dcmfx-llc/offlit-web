@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía extra: cómo combinar los tres indicadores · OFFLIT</title>
+<meta name="description" content="Cómo usar juntos OFFLIT · Intradía, Swing y Acciones.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0c0e13; --bg2:#10131a; --panel:#151922; --panel2:#1a1f2a; --line:#262c39; --line2:#323a4b;
+  --fg:#ebe7df; --fg2:#c9c4b8; --muted:#8e8c88; --dim:#5f5f66;
+  --brass:#c8aa6e; --brass2:#e2c88f;
+  --techo:#c96a66; --suelo:#5e9f84; --iman:#8f88cf; --liq:#cfa052; --prot:#5f9bc9; --libre:#8a8f99;
+  --display:"Spectral","Iowan Old Style",Georgia,serif;
+  --body:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark }
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light } }
+:root[data-theme="light"]{
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:clamp(2.3rem,5.5vw,4rem)}
+h2{font-size:clamp(1.7rem,3.2vw,2.5rem)}
+h3{font-size:1.3rem;line-height:1.3}
+h1 i,h2 i{font-style:italic;font-weight:300;color:var(--brass2)}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.prose{max-width:66ch}
+.prose p+p,.prose ol,.prose ul{margin-top:14px}
+section{padding-block:clamp(48px,8vw,96px)}
+.rule{border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+.stack{display:grid;gap:24px}
+.lead{font-size:1.2rem;color:var(--fg2)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:600;padding:14px 22px;border-radius:3px;font-size:.95rem;border:0}
+.btn:hover{background:var(--brass2)}
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark{width:26px;height:26px;position:relative}
+.mark::before,.mark::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--brass)}
+.mark::before{top:7px}.mark::after{top:17px;opacity:.45}
+.brand span{font-family:var(--mono);font-weight:500;letter-spacing:.32em;font-size:.95rem;color:var(--fg)}
+.navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--muted);flex-wrap:wrap}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{color:var(--fg)}
+@media (max-width:760px){.navlinks{display:none}}
+
+/* contenido */
+.grid2{display:grid;gap:40px;grid-template-columns:1fr 1fr;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);color:var(--brass);font-size:.85rem;padding-top:4px}
+.steps b{display:block;font-weight:600;margin-bottom:4px}
+.term{border-bottom:1px dashed var(--brass);text-decoration:none;cursor:help}
+.note{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--brass);padding:18px 22px;border-radius:2px;color:var(--fg2);font-size:.98rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:26px}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(2,1fr)}
+@media (max-width:760px){.cards{grid-template-columns:1fr}}
+.swatch{display:inline-block;width:38px;height:12px;border-radius:2px;margin-right:12px;vertical-align:middle}
+.card h3{display:flex;align-items:center;margin-bottom:12px}
+.card p+p{margin-top:10px}
+.card .q{color:var(--muted);font-size:.95rem}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;font-size:.98rem}
+.kv dt{font-family:var(--mono);color:var(--brass);font-size:.82rem;padding-top:3px;white-space:nowrap}
+.kv dd{margin:0;color:var(--fg2)}
+.symbols{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.symbols span{font-family:var(--mono);font-size:.82rem;border:1px solid var(--line2);padding:6px 10px;border-radius:2px;color:var(--fg2)}
+.symbols span small{color:var(--muted)}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:"+";font-family:var(--mono);color:var(--brass)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--fg2);max-width:66ch}
+figure{margin:0}
+figcaption{font-size:.88rem;color:var(--muted);margin-top:10px}
+.chart{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:3px;background:var(--bg2)}
+footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);font-size:.86rem}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="brand" href="/" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <nav class="navlinks"><a href="#guias">Tus guías</a><a href="#orden">El orden</a><a href="#coincidencias">Coincidencias</a><a href="#rutina">Rutina</a><a href="/guia/#zonas">Las seis zonas</a></nav>
+  <a class="btn" href="mailto:hola@offlit.io">Soporte</a>
+</div></header>
+
+<main>
+
+<section class="wrap">
+  <div class="eyebrow">Guía extra · Pack completo</div>
+  <h1>Los tres juntos: <i>de arriba abajo</i>.</h1>
+  <p class="lead prose" style="margin-top:22px">Cada indicador responde a una pregunta distinta. Usados en orden, te llevan del contexto general al precio exacto de la sesión.</p>
+</section>
+<section class="wrap rule" id="guias">
+  <div class="eyebrow">00 · Tus guías</div>
+  <div class="cards" style="margin-top:18px">
+    <div class="card"><h3>OFFLIT · Intradía</h3><p>Dark pools de la última sesión. De 1 minuto a 1 hora.</p><p><a href="/guia/intradia/">Abrir la guía →</a></p></div>
+    <div class="card"><h3>OFFLIT · Swing</h3><p>Muros de opciones a semanas y meses. 4 horas y diario.</p><p><a href="/guia/swing/">Abrir la guía →</a></p></div>
+    <div class="card"><h3>OFFLIT · Acciones</h3><p>121 valores por sectores y rotación del dinero.</p><p><a href="/guia/acciones/">Abrir la guía →</a></p></div>
+    <div class="card"><h3>Las seis zonas</h3><p>Qué significa cada color y cómo se lee.</p><p><a href="/guia/#zonas">Abrir →</a></p></div>
+  </div>
+</section>
+<section class="wrap rule" id="orden">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">01 · El orden</div>
+      <h2>Tres preguntas, <i>tres indicadores</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">Empieza siempre por el marco más grande y baja.</p>
+    </div>
+    <ol class="steps"><li><div><b>¿En qué terreno estoy? → Swing</b>En diario, mira entre qué muros está el precio y a qué lado del gamma flip (el nivel donde el mercado pasa de tranquilo a brusco). Eso decide cuánto riesgo tiene sentido asumir esta semana.</div></li><li><div><b>¿Hacia dónde va el dinero? → Acciones</b>La rotación por sectores te dice si el mercado busca riesgo (tecnología, consumo discrecional) o se refugia (consumo básico, salud, eléctricas). Es el mejor termómetro del día para los índices.</div></li><li><div><b>¿A qué precio actúo hoy? → Intradía</b>Con el terreno y la dirección claros, Intradía te da el imán, el techo y el suelo de la sesión para afinar entrada, stop y objetivos.</div></li></ol>
+  </div>
+</section>
+<section class="wrap rule" id="coincidencias">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">02 · Cuando coinciden</div>
+      <h2>Las zonas que <i>pesan el doble</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">Lo más valioso del pack no es cada indicador, sino lo que pasa cuando dos señalan lo mismo.</p>
+    </div>
+    <div class="cards"><div class="card"><h3>Techo de Intradía + muro de calls de Swing</h3><p>Dos fuentes distintas marcan el mismo precio. Es el nivel donde menos sentido tiene comprar una rotura sin confirmación.</p></div><div class="card"><h3>Suelo de Intradía + protección de Swing</h3><p>El suelo del día coincide con donde las carteras tienen su cobertura. Si aguanta, suele ser un buen punto de rebote; si se pierde, la caída se acelera.</p></div><div class="card"><h3>Rotación defensiva + precio bajo el gamma flip</h3><p>El dinero sale del riesgo y el mercado está en zona de movimientos bruscos. Reduce tamaño y no busques suelos antes de tiempo.</p></div><div class="card"><h3>Rotación hacia el riesgo + precio sobre el imán</h3><p>Entra dinero en sectores de crecimiento y el índice se sostiene sobre la referencia del día. Los retrocesos al imán son donde buscar continuación.</p></div></div>
+  </div>
+</section>
+<section class="wrap rule" id="rutina">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">03 · Rutina completa</div>
+      <h2>Diez minutos <i>al día</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">Los correos de cada noche ya te dejan medio trabajo hecho.</p>
+    </div>
+    <ol class="steps"><li><div><b>Por la noche o antes de abrir: los dos correos</b>El de zonas trae el sesgo de cada activo. El de Acciones, la rotación por sectores y los resultados que vienen.</div></li><li><div><b>Actualiza los tres indicadores</b>Intradía y Swing, con el icono de actualizar. Acciones, quitándolo y volviéndolo a añadir.</div></li><li><div><b>Swing en diario, Intradía en 15 minutos</b>Marca mentalmente los muros de Swing y busca qué zonas de Intradía caen cerca de ellos.</div></li><li><div><b>Decide con tu contexto</b>OFFLIT te da el mapa. La decisión la confirman tu lectura macro, geopolítica y técnica.</div></li></ol>
+  </div>
+</section>
+<section class="wrap rule" id="responsabilidad">
+  <div class="note">OFFLIT es una herramienta de contexto. Las zonas muestran posicionamiento real del mercado, no son señales de compra o venta ni consejos de inversión. Confírmalas siempre con tu propio contexto macro, geopolítico y técnico, y decide tú el riesgo de cada operación.</div>
+</section>
+</main>
+
+<footer><div class="wrap stack" style="gap:12px">
+  <a class="brand" href="/" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <p>Un producto de DCM FX, LLC · Contenido educativo. No constituye asesoramiento financiero ni recomendación de inversión. Operar con CFDs, futuros y opciones conlleva un alto riesgo de pérdida.</p>
+  <p>Soporte: <a href="mailto:hola@offlit.io">hola@offlit.io</a> · TradingView es una marca de TradingView, Inc.</p>
+</div></footer>
+
+</body>
+</html>

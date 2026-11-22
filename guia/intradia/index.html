@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía de OFFLIT · Intradía · OFFLIT</title>
+<meta name="description" content="Cómo activar y leer OFFLIT · Intradía: zonas de dark pool para la sesión en curso.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0c0e13; --bg2:#10131a; --panel:#151922; --panel2:#1a1f2a; --line:#262c39; --line2:#323a4b;
+  --fg:#ebe7df; --fg2:#c9c4b8; --muted:#8e8c88; --dim:#5f5f66;
+  --brass:#c8aa6e; --brass2:#e2c88f;
+  --techo:#c96a66; --suelo:#5e9f84; --iman:#8f88cf; --liq:#cfa052; --prot:#5f9bc9; --libre:#8a8f99;
+  --display:"Spectral","Iowan Old Style",Georgia,serif;
+  --body:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark }
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light } }
+:root[data-theme="light"]{
+  --bg:#f4f2ed; --bg2:#ece9e2; --panel:#ffffff; --panel2:#f7f5f0; --line:#dcd7cc; --line2:#c9c3b6;
+  --fg:#15171c; --fg2:#2d3038; --muted:#5e6069; --dim:#8a8b92; --brass:#8e6f2d; --brass2:#6f561f; color-scheme:light }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:clamp(2.3rem,5.5vw,4rem)}
+h2{font-size:clamp(1.7rem,3.2vw,2.5rem)}
+h3{font-size:1.3rem;line-height:1.3}
+h1 i,h2 i{font-style:italic;font-weight:300;color:var(--brass2)}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.prose{max-width:66ch}
+.prose p+p,.prose ol,.prose ul{margin-top:14px}
+section{padding-block:clamp(48px,8vw,96px)}
+.rule{border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+.stack{display:grid;gap:24px}
+.lead{font-size:1.2rem;color:var(--fg2)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:600;padding:14px 22px;border-radius:3px;font-size:.95rem;border:0}
+.btn:hover{background:var(--brass2)}
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark{width:26px;height:26px;position:relative}
+.mark::before,.mark::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--brass)}
+.mark::before{top:7px}.mark::after{top:17px;opacity:.45}
+.brand span{font-family:var(--mono);font-weight:500;letter-spacing:.32em;font-size:.95rem;color:var(--fg)}
+.navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--muted);flex-wrap:wrap}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{color:var(--fg)}
+@media (max-width:760px){.navlinks{display:none}}
+
+/* contenido */
+.grid2{display:grid;gap:40px;grid-template-columns:1fr 1fr;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);color:var(--brass);font-size:.85rem;padding-top:4px}
+.steps b{display:block;font-weight:600;margin-bottom:4px}
+.term{border-bottom:1px dashed var(--brass);text-decoration:none;cursor:help}
+.note{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--brass);padding:18px 22px;border-radius:2px;color:var(--fg2);font-size:.98rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:26px}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(2,1fr)}
+@media (max-width:760px){.cards{grid-template-columns:1fr}}
+.swatch{display:inline-block;width:38px;height:12px;border-radius:2px;margin-right:12px;vertical-align:middle}
+.card h3{display:flex;align-items:center;margin-bottom:12px}
+.card p+p{margin-top:10px}
+.card .q{color:var(--muted);font-size:.95rem}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;font-size:.98rem}
+.kv dt{font-family:var(--mono);color:var(--brass);font-size:.82rem;padding-top:3px;white-space:nowrap}
+.kv dd{margin:0;color:var(--fg2)}
+.symbols{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.symbols span{font-family:var(--mono);font-size:.82rem;border:1px solid var(--line2);padding:6px 10px;border-radius:2px;color:var(--fg2)}
+.symbols span small{color:var(--muted)}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:"+";font-family:var(--mono);color:var(--brass)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--fg2);max-width:66ch}
+figure{margin:0}
+figcaption{font-size:.88rem;color:var(--muted);margin-top:10px}
+.chart{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:3px;background:var(--bg2)}
+footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);font-size:.86rem}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="brand" href="/" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <nav class="navlinks"><a href="#activar">Activar</a><a href="#origen">De dónde sale</a><a href="#zonas">Zonas</a><a href="#rutina">Cómo usarlo</a><a href="#actualizar">Cada día</a><a href="/guia/#zonas">Las seis zonas</a></nav>
+  <a class="btn" href="mailto:hola@offlit.io">Soporte</a>
+</div></header>
+
+<main>
+
+<section class="wrap">
+  <div class="eyebrow">Guía · OFFLIT Intradía</div>
+  <h1>El mapa de <i>la sesión</i>.</h1>
+  <p class="lead prose" style="margin-top:22px">OFFLIT · Intradía marca dónde se negociaron ayer los bloques grandes que no pasan por el mercado visible. Son los precios que el mercado defiende o vuelve a visitar hoy.</p>
+</section>
+<section class="wrap rule" id="activar">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">01 · Activar</div>
+      <h2>En TradingView, <i>dos minutos</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">El acceso se activa solo tras el pago, normalmente en un par de minutos, en la cuenta de TradingView que escribiste al comprar.</p>
+    </div>
+    <ol class="steps"><li><div><b>Abre un gráfico y pulsa "Indicadores"</b>Está en la barra superior del gráfico de TradingView.</div></li><li><div><b>Entra en "Scripts solo por invitación"</b>Es una pestaña del menú de la izquierda. Ahí aparece <span class="mono">OFFLIT · Intradía</span>. Púlsalo para añadirlo al gráfico.</div></li><li><div><b>Abre un activo cubierto</b>Vale cualquier bróker de TradingView: el indicador reconoce el símbolo por su nombre y ajusta las zonas al precio de tu gráfico. También funcionan los futuros ES, NQ, YM, GC, SI y CL.<div class="symbols"><span>US500 <small>· SPX500</small></span><span>USTECH <small>· NAS100</small></span><span>US30</span><span>GER40 <small>· DAX40</small></span><span>XAUUSD <small>· GOLD</small></span><span>XAGUSD <small>· SILVER</small></span><span>USOIL <small>· WTI</small></span><span>UKOIL <small>· BRENT</small></span><span>BTCUSD</span><span>COPPER <small>· cobre</small></span></div></div></li><li><div><b>Elige la temporalidad</b>Intradía se ve de 1 minuto a 1 hora. Si el panel dice "cambia de temporalidad", es solo eso.</div></li></ol>
+  </div>
+</section>
+<section class="wrap rule" id="origen">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">02 · De dónde sale</div>
+      <h2>Dark pools: lo que <i>no se ve</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">Una dark pool es un mercado privado donde fondos y bancos cruzan operaciones grandes sin enseñarlas en el libro de órdenes. Se publican después, con retraso.</p>
+    </div>
+    <div class="prose stack" style="gap:16px"><p>Cuando un fondo compra o vende un bloque grande a un precio, ese precio queda marcado: ahí tiene una posición que defender. Intradía reúne los bloques de la última sesión y señala los precios donde se concentró más volumen.</p><p>Por eso caduca rápido. Las zonas de Intradía valen para la sesión de hoy; mañana habrá otras.</p><p>Una excepción: si aparece una zona de <b>liquidez</b> y el precio no llega a ella durante la sesión, se mantiene al día siguiente. Sigue pendiente de visitar.</p></div>
+  </div>
+</section>
+<section class="wrap rule" id="zonas">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">03 · Qué zonas verás</div>
+      <h2>Imán, techo, suelo y <i>liquidez</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">La explicación completa de cada color está en <a href="/guia/#zonas">Las seis zonas</a>.</p>
+    </div>
+    <div class="cards"><div class="card"><h3>Imán</h3><p>El precio con más volumen oculto cerca del precio actual. Es la referencia del día: por encima, el sesgo es comprador; por debajo, vendedor. El precio vuelve a él muchas veces.</p></div><div class="card"><h3>Techo y suelo</h3><p>Bloques grandes por encima y por debajo del precio. Ahí el mercado suele frenar, dudar o girar. Si los atraviesa con fuerza y se mantiene al otro lado, dejan de valer.</p></div><div class="card"><h3>Liquidez</h3><p>Precios con mucho volumen total que no son techo ni suelo. El precio suele acelerarse o frenarse de golpe al tocarlos. Sirven como objetivos parciales.</p></div><div class="card"><h3>Espacio libre</h3><p>Tramo sin nada delante entre dos zonas. Si el precio entra, el objetivo lógico es la zona que lo cierra por el otro lado.</p></div></div>
+  </div>
+</section>
+<section class="wrap rule" id="rutina">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">04 · Cómo usarlo</div>
+      <h2>Una rutina de <i>cinco minutos</i>.</h2>
+      <p class="prose muted" style="margin-top:16px">Intradía no da entradas. Te dice dónde están los precios que importan para que tu método opere con contexto.</p>
+    </div>
+    <ol class="steps"><li><div><b>Antes de abrir, mira el mapa</b>Abre el activo en 15 minutos. Localiza el imán, el techo y el suelo más cercanos y el sesgo del panel.</div></li><li><div><b>Sitúa el precio respecto al imán</b>Por encima del imán con sesgo comprador, los retrocesos al imán son donde buscar continuación. Por debajo con sesgo vendedor, al revés.</div></li><li><div><b>En techo y suelo, no persigas</b>Cuando el precio llega a una zona de fuerza 4 o 5 lo normal es que frene. Espera a ver si la rechaza o si consolida al otro lado.</div></li><li><div><b>Usa liquidez y espacio libre para los objetivos</b>Las bandas de liquidez entre tu entrada y el siguiente techo o suelo son sitios lógicos para recoger parciales.</div></li></ol>
+  </div>
+</section>
+<section class="wrap rule" id="actualizar">
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">05 · Cada día</div>
+      <h2>Zonas nuevas <i>cada noche</i>.</h2>
+      
+    </div>
+    <div class="prose stack" style="gap:16px"><p>Cada noche, tras el cierre de Wall Street, se calculan las zonas nuevas y te llega un correo. TradingView no carga sola la versión nueva: recarga el gráfico, pulsa el icono morado de actualizar junto al nombre del indicador y elige <b>Update to latest version</b>. Si el icono no aparece, quita el indicador (papelera junto a su nombre) y vuelve a añadirlo desde Indicadores &gt; Scripts solo por invitación. La fecha del recuadro del indicador debe ser la de la sesión de hoy.</p><p>Intradía funciona solo, pero gana mucho si lo confirmas con el marco grande: cuando un techo de Intradía coincide con un muro de opciones de OFFLIT · Swing, ese nivel pesa el doble.</p></div>
+  </div>
+</section>
+<section class="wrap rule" id="responsabilidad">
+  <div class="note">OFFLIT es una herramienta de contexto. Las zonas muestran posicionamiento real del mercado, no son señales de compra o venta ni consejos de inversión. Confírmalas siempre con tu propio contexto macro, geopolítico y técnico, y decide tú el riesgo de cada operación.</div>
+</section>
+</main>
+
+<footer><div class="wrap stack" style="gap:12px">
+  <a class="brand" href="/" aria-label="OFFLIT"><span class="mark" aria-hidden="true"></span><span>OFFLIT</span></a>
+  <p>Un producto de DCM FX, LLC · Contenido educativo. No constituye asesoramiento financiero ni recomendación de inversión. Operar con CFDs, futuros y opciones conlleva un alto riesgo de pérdida.</p>
+  <p>Soporte: <a href="mailto:hola@offlit.io">hola@offlit.io</a> · TradingView es una marca de TradingView, Inc.</p>
+</div></footer>
+
+</body>
+</html>
