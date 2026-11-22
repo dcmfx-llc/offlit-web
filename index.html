@@ -569,7 +569,7 @@ footer{border-top:0}
     </div>
   </div>
   <p class="fine prose" id="anual-nota" hidden>Con cualquier plan anual: dos meses gratis, sesión de lectura en directo al entrar y acceso prioritario a nuevas lecturas.</p>
-  <p class="fine prose">Al pagar te pedimos tu nombre de usuario de TradingView. El acceso a cada indicador se activa en tu cuenta en menos de una hora y se renueva mientras la suscripción esté activa. Si la cancelas, el acceso termina al final del periodo pagado.</p>
+  <p class="fine prose">Al pagar te pedimos tu nombre de usuario de TradingView. En el pack de dos eliges ahí mismo qué dos indicadores quieres. El acceso se activa en tu cuenta en unos minutos y se renueva mientras la suscripción esté activa. Si la cancelas, el acceso termina al final del periodo pagado.</p>
 </div></section>
 
 <section class="rule"><div class="wrap stack">
@@ -602,8 +602,8 @@ footer{border-top:0}
 (function(){
   // Enlaces de pago de Stripe por plan y periodo. Vacío = todavía sin enlace (el botón no lleva a ningún sitio).
   const LINKS = {
-    mes: {intradia:"", swing:"", acciones:"", "intradia-swing":"", "intradia-acciones":"", "swing-acciones":"", pack3:""},
-    ano: {intradia:"", swing:"", acciones:"", "intradia-swing":"", "intradia-acciones":"", "swing-acciones":"", pack3:""}
+    mes: {intradia:"https://buy.stripe.com/eVqfZh4zJ28EgQY1pI9fW07", swing:"https://buy.stripe.com/3cI6oHfenaFaasA4BU9fW0a", acciones:"https://buy.stripe.com/5kQcN58PZaFa3084BU9fW0c", "intradia-swing":"https://buy.stripe.com/8x25kDaY77sYdEMd8q9fW0g", "intradia-acciones":"https://buy.stripe.com/8x25kDaY77sYdEMd8q9fW0g", "swing-acciones":"https://buy.stripe.com/8x25kDaY77sYdEMd8q9fW0g", pack3:"https://buy.stripe.com/6oUcN5eajcNicAI4BU9fW0e"},
+    ano: {intradia:"https://buy.stripe.com/4gM5kD9U3dRm3084BU9fW08", swing:"https://buy.stripe.com/6oU4gzfen7sYfMU0lE9fW0b", acciones:"https://buy.stripe.com/cNi14n4zJ5kQ9ow6K29fW0d", "intradia-swing":"https://buy.stripe.com/dRm14n3vF9B60S0d8q9fW0h", "intradia-acciones":"https://buy.stripe.com/dRm14n3vF9B60S0d8q9fW0h", "swing-acciones":"https://buy.stripe.com/dRm14n3vF9B60S0d8q9fW0h", pack3:"https://buy.stripe.com/4gM14n9U300wfMU4BU9fW0f"}
   };
   const sec = document.getElementById('acceso'); if(!sec) return;
   let bill = 'mes';
