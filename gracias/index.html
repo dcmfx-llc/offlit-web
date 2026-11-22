@@ -121,6 +121,20 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   </div>
 </section>
 
+<section class="wrap rule" id="oferta" hidden>
+  <div class="grid2">
+    <div>
+      <div class="eyebrow">Solo en esta página</div>
+      <h2>Añade otro indicador por <i>27,94 $ al mes</i>.</h2>
+    </div>
+    <div class="prose stack" style="gap:16px">
+      <p>Suelto cuesta 34,94 $ al mes. Si lo añades ahora, se queda en 27,94 $ al mes mientras mantengas la suscripción. <span id="oferta-cual"></span></p>
+      <p>Al pagar eliges cuál añades y escribes el mismo usuario de TradingView. Es una suscripción aparte: puedes cancelarla cuando quieras sin tocar la primera.</p>
+      <p><a class="btn" href="https://buy.stripe.com/fZubJ17LVfZufMUfgy9fW0i">Añadir otro indicador</a></p>
+    </div>
+  </div>
+</section>
+
 <section class="wrap rule">
   <div class="note" style="margin-bottom:16px">Las novedades y avisos de OFFLIT salen primero en el canal de Telegram: <a href="https://t.me/offlit_io" target="_blank" rel="noopener">t.me/offlit_io →</a></div>
   <div class="note">¿Te has equivocado al escribir tu usuario de TradingView? No pasa nada: te avisaremos por correo y lo corregimos. También puedes escribir a <a href="mailto:hola@offlit.io">hola@offlit.io</a>.</div>
@@ -136,15 +150,21 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
 <script>
 (function(){
   var G = {intradia:["OFFLIT · Intradía","/guia/intradia/"], swing:["OFFLIT · Swing","/guia/swing/"], acciones:["OFFLIT · Acciones","/guia/acciones/"]};
-  var P = {intradia:["intradia"], swing:["swing"], acciones:["acciones"], completo:["intradia","swing","acciones"], dos:["intradia","swing","acciones"]};
+  var P = {intradia:["intradia"], swing:["swing"], acciones:["acciones"], completo:["intradia","swing","acciones"], extra:["intradia","swing","acciones"], dos:["intradia","swing","acciones"]};
   var p = new URLSearchParams(location.search).get("p");
   if (!p || !(p in P)) return;
   var que = document.getElementById("que"), guias = document.getElementById("guias");
   var h = P[p].map(function(k){ return "<a href=\"" + G[k][1] + "\">Guía de " + G[k][0].replace("OFFLIT · ", "") + " →</a>"; });
   if (p === "completo") { que.textContent = "los tres indicadores de OFFLIT"; h.push("<a href=\"/guia/completa/\">Cómo combinar los tres →</a>"); }
   else if (p === "dos") { que.textContent = "los dos indicadores que has elegido"; }
+  else if (p === "extra") { que.textContent = "tu indicador adicional"; }
   else { que.textContent = G[p][0]; }
   guias.innerHTML = h.join(" · ");
+  if (P[p].length === 1 && p in G) {
+    var otros = Object.keys(G).filter(function(k){ return k !== p; }).map(function(k){ return G[k][0].replace("OFFLIT · ", ""); });
+    document.getElementById("oferta-cual").textContent = "Puedes elegir " + otros.join(" o ") + ".";
+    document.getElementById("oferta").hidden = false;
+  }
 })();
 </script>
 </body>
